@@ -1,0 +1,181 @@
+"TagId";"TagName";"ParentTagId"
+462;"Host species";0
+463;"Poultry";462
+464;"Horses";462
+465;"Cattle";462
+466;"Small ruminants";462
+467;"Buffalo";462
+468;"Pigs";462
+469;"Finfish";462
+470;"Shellfish";462
+471;"Crustaceans";462
+472;"Mollusks";462
+473;"Cats";462
+474;"Dogs";462
+475;"Wildlife";462
+476;"Zoonoses";462
+477;"Transboundary/Foreign animal disease";462
+478;"Camels";462
+479;"Pathogen";0
+480;"Viruses";479
+481;"Adenovirus";480
+482;"African horse sickness";480
+483;"African swine fever virus";480
+484;"Arboviruses";480
+485;"Ateriviruses";480
+486;"Avian papillomavirus";480
+487;"Avian polyomavirus";480
+488;"Bluetongue virus";480
+489;"Bovine ephemeral fever virus";480
+490;"Bovine viral diarrhea";480
+491;"Calicivirus";480
+492;"Capripoxvirus";480
+493;"Chicken anemia virus";480
+494;"Classical swine fever virus";480
+495;"Coronavirus";480
+496;"Crimean-Congo hemorrhagic fever virus";480
+497;"Cytomegalovirus";480
+498;"Ebolaviruses/filoviruses";480
+499;"Feline leukemia virus";480
+500;"Foot-and-mouth disease virus";480
+501;"Herpesvirus";480
+502;"Infectious bursal disease virus";480
+503;"Infectiouspancreatic necrosis virus";480
+504;"Infectious salmon anemia virus";480
+505;"Influenza virus";480
+506;"Mareks disease virus";480
+507;"Nairoviruses";480
+508;"Newcastle disease virus";480
+509;"Nipah virus";480
+510;"Parainfluenza virus";480
+511;"Paramyxoviruses";480
+512;"Parvovirus";480
+513;"Peste des petits ruminants virus";480
+514;"Piscine novirhabdovirus";480
+515;"Porcine circovirus";480
+516;"Porcine reproductive & respiratory syndrome virus";480
+517;"Poxviruses";480
+518;"Rabies virus";480
+519;"Respiratory syncytial virus";480
+520;"Retroviruses";480
+521;"Rift Valley fever virus";480
+522;"Rotaviruses";480
+523;"Bacteria";479
+524;"Aeromonas";523
+525;"Anaplasma";523
+526;"Borrelia";523
+527;"Brucella";523
+528;"Chlamydia";523
+529;"Chlamydiophila";523
+530;"Clostridia";523
+531;"Corynebacterium";523
+532;"Coxiella";523
+533;"Erlichia";523
+534;"E.coli";523
+535;"Erysipelas";523
+536;"Francisella";523
+537;"Leptospira";523
+538;"Mycobacterium avium subsp. paratuberculosis";523
+539;"Mycoplasma hyopneumoniae (M. hyo)";523
+540;"Mycoplasma species";523
+541;"Mycobacteria bovis";523
+542;"Rickettsia";523
+543;"Yersinia";523
+544;"Salmonella";523
+545;"Staphylococcus";523
+546;"Parasites";479
+547;"Babesia";546
+548;"Cestodes";546
+549;"Diptera";546
+550;"Eimeria";546
+551;"Mites";546
+552;"Nematodes";546
+553;"Neospora";546
+554;"Taenia";546
+555;"Theileria";546
+556;"Ticks";546
+557;"Trypanosoma";546
+558;"Discipline";0
+559;"Industrial";558
+560;"Bio-manufacturing";559
+561;"Commercialisation";559
+562;"Deployment";559
+563;"Fund raising, venture capital";559
+564;"Marketing strategies";559
+565;"QC test development";559
+566;"Quality assurance";559
+567;"Patents";559
+568;"Registration";559
+569;"Regulation";559
+570;"Transition from research to manufacture";559
+571;"Marketing";559
+572;"Vaccine testing";558
+573;"Challenge model development";572
+574;"Challenge study design";572
+575;"Clinical trails";572
+576;"Clinical trials - efficacy";572
+577;"Clinical trials - safety";572
+578;"Field trails";572
+579;"Pre-clinical trails";572
+580;"Safety evaluation";572
+581;"Academic";558
+582;"Economics";581
+583;"Epidemiology";581
+584;"Ethics";581
+585;"Social sciences";581
+586;"Statistics";581
+587;"Immunology";558
+588;"Humoral immunity";587
+589;"Innate immunity";587
+590;"Cellular immunity";587
+591;"Allergy";587
+592;"Correlates of protection-immunomonitoring";587
+593;"Protective antigens";587
+594;"Mucosal vaccines";587
+595;"Cancer vaccines";587
+596;"Basic Science";558
+597;"Bioinformatics";596
+598;"Cellular biology";596
+599;"Molecular biology";596
+600;"Pharmacovigilance";596
+601;"Protein biology";596
+602;"Structural biology";596
+603;"Systems biology";596
+604;"Vaccine technology";558
+605;"Live-attenuated vaccine";604
+606;"Adjuvants";604
+607;"Antigen discovery and immunogen design";604
+608;"Formulation technology";604
+609;"Killed vaccines/bacterins";604
+610;"Mosaic/cross-protective/universal vaccines";604
+611;"Plant-expressed vaccines";604
+612;"Subunit vaccines";604
+613;"Synthetic biology";604
+614;"Vaccine delivery";604
+615;"Vector-borne/transmission-blocking vaccines";604
+616;"DNA/RNA vaccines";604
+617;"Affiliation";0
+618;"Affiliation: US Government";617
+619;"Affiliation: State Government";617
+620;"Affiliation: Industry, Producer";617
+621;"Affiliation: Industry, vaccines";617
+622;"Affiliation: Industry, Retail";617
+623;"Affiliation: Veterinary Clinical";617
+624;"Affiliation: Academic Extension";617
+625;"Affiliation: Academic Teaching";617
+626;"Affiliation: Academic Research";617
+627;"Funding";0
+628;"Funding: USDA";627
+629;"Funding: NIH";627
+630;"Funding: NSF";627
+631;"Funding: NPB";627
+632;"Funding: US Egg&Poultry";627
+633;"Funding: Internal";627
+634;"Funding: USAID";627
+635;"Funding: Defense";627
+636;"Funding: DARPA";627
+637;"Funding: IVVN";627
+638;"Funding: Foundational";627
+639;"Funding: International";627
+640;"Funding: State";627
+641;"Rhodococcus";523
