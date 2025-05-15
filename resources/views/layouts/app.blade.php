@@ -22,7 +22,10 @@
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ms-auto">
           <li class="nav-item">
-            <a class="nav-link" href="{{ route('entities.index') }}">Member Search</a>
+            <a class="nav-link" href="{{ route('entities.index') }}">Members</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ route('tags.index') }}">Tags</a>
           </li>
         </ul>
       </div>

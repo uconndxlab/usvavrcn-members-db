@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EntityController;
+use App\Http\Controllers\TagController;
 
 
 Route::get('/', function () {
@@ -15,4 +16,10 @@ Route::get('entities/{entity}', [EntityController::class, 'show'])->name('entiti
 Route::get('entities/{entity}/edit', [EntityController::class, 'edit'])->name('entities.edit');
 Route::put('entities/{entity}', [EntityController::class, 'update'])->name('entities.update');
 Route::delete('entities/{entity}', [EntityController::class, 'destroy'])->name('entities.destroy');
+
+
+
+
+Route::resource('tags', TagController::class)->except(['show']);
+
 
