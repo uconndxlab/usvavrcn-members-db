@@ -58,6 +58,22 @@
     {{-- More Details --}}
     <div class="row">
         <div class="col-md-6">
+
+            <div class="mb-3">
+                <h5>Tags</h5>
+                @if ($entity->tags->isNotEmpty())
+                    <ul class="list-inline">
+                        @foreach ($entity->tags as $tag)
+                            <li class="list-inline-item">
+                                <span class="badge bg-secondary">{{ $tag->name }}</span>
+                            </li>
+                        @endforeach
+                    </ul>
+                @else
+                    <p class="text-muted">No tags assigned</p>
+                @endif
+            </div>
+
             <div class="mb-3">
                 <h5>Description</h5>
                 <p>{{ $entity->description ?? '—' }}</p>

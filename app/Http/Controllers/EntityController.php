@@ -14,18 +14,18 @@ class EntityController extends Controller
         if ($request->filled('search')) {
             $query->where('name', 'like', '%' . $request->search . '%');
         }
-    
+
         if ($request->filled('type')) {
             $query->where('entity_type', $request->type);
         }
-    
+
         if ($request->filled('sort')) {
             $direction = $request->sort === 'name_desc' ? 'desc' : 'asc';
             $query->orderBy('name', $direction);
         }
-    
+
         $entities = $query->paginate(12)->withQueryString();
-    
+
         return view('entities.index', compact('entities'));
     }
 
@@ -50,12 +50,16 @@ class EntityController extends Controller
 
     public function show(Entity $entity)
     {
-        return view('entities.show', compact('entity'));
+        $tags = \App\Models\Tag::orderBy('name')->get(); // pass in all available tags
+        $selectedTags = $entity->tags->pluck('id')->toArray();
+        return view('entities.show', compact('entity', 'tags', 'selectedTags'));
     }
 
     public function edit(Entity $entity)
     {
-        return view('entities.edit', compact('entity'));
+        $tags = \App\Models\Tag::orderBy('name')->get(); // pass in all available tags
+        $selectedTags = $entity->tags->pluck('id')->toArray();
+        return view('entities.edit', compact('entity', 'tags', 'selectedTags'));
     }
 
     public function update(Request $request, Entity $entity)
@@ -69,7 +73,10 @@ class EntityController extends Controller
         ]);
 
         $entity->update($validated);
-        return redirect()->route('entities.index')->with('success', 'Entity updated.');
+
+        $entity->tags()->sync($request->input('tags', []));
+
+        return redirect()->route('entities.show', $entity)->with('success', 'Entity updated.');
     }
 
     public function destroy(Entity $entity)
