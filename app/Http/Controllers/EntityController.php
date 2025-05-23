@@ -52,14 +52,24 @@ class EntityController extends Controller
     {
         $tags = \App\Models\Tag::orderBy('name')->get(); // pass in all available tags
         $selectedTags = $entity->tags->pluck('id')->toArray();
-        return view('entities.show', compact('entity', 'tags', 'selectedTags'));
+        $allPeople = Entity::where('entity_type', 'person')->orderBy('name')->get();
+
+        $selectedMembers = $entity->members->pluck('id')->toArray();
+        return view('entities.show', compact('entity', 'tags', 'selectedTags', 'allPeople', 'selectedMembers'));
     }
 
     public function edit(Entity $entity)
     {
         $tags = \App\Models\Tag::orderBy('name')->get(); // pass in all available tags
         $selectedTags = $entity->tags->pluck('id')->toArray();
-        return view('entities.edit', compact('entity', 'tags', 'selectedTags'));
+        $allPeople = Entity::where('entity_type', 'person')
+            ->where('name', '!=', '')
+            ->orderBy('name')
+            ->get();
+
+
+        $selectedMembers = $entity->members->pluck('id')->toArray();
+        return view('entities.edit', compact('entity', 'tags', 'selectedTags', 'allPeople', 'selectedMembers'));
     }
 
     public function update(Request $request, Entity $entity)
@@ -75,6 +85,10 @@ class EntityController extends Controller
         $entity->update($validated);
 
         $entity->tags()->sync($request->input('tags', []));
+
+        if ($entity->entity_type === 'group') {
+            $entity->members()->sync($request->input('members', []));
+        }
 
         return redirect()->route('entities.show', $entity)->with('success', 'Entity updated.');
     }
