@@ -29,9 +29,9 @@ class EntityController extends Controller
         return view('entities.index', compact('entities'));
     }
 
-    public function create()
+    public function create(Entity $entity)
     {
-        return view('entities.create');
+        return view('entities.create', compact('entity'));
     }
 
     public function store(Request $request)
