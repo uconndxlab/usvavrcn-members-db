@@ -224,6 +224,101 @@
                 </div>
             </div>
 
+            <div class="row g-3 mt-1">
+                <div class="col-md-6">
+                    <label class="form-label">Discipline</label>
+                    <div style="max-height: 250px; overflow-y: auto; border: 1px solid #ced4da; border-radius: .375rem; padding: 0.75rem;">
+                        @php
+                            $disciplineOptions = [
+                                'bacteriology' => 'Bacteriology',
+                                'bio_manufacturing' => 'Bio-manufacturing',
+                                'bioinformatics' => 'Bioinformatics',
+                                'cellular_biology' => 'Cellular biology',
+                                'challenge_model_development' => 'Challenge model development',
+                                'challenge_study_design' => 'Challenge study design',
+                                'clinical_trials_efficacy' => 'Clinical trials – efficacy',
+                                'clinical_trials_safety' => 'Clinical trials – safety',
+                                'commercialisation' => 'Commercialisation',
+                                'deployment' => 'Deployment',
+                                'economics' => 'Economics',
+                                'epidemiology' => 'Epidemiology',
+                                'ethics' => 'Ethics',
+                                'formulation_technology' => 'Formulation technology',
+                                'immunology_b_cells' => 'Immunology – B-cells',
+                                'immunology_innate' => 'Immunology – innate',
+                                'immunology_t_cells' => 'Immunology – T-cells',
+                                'molecular_biology' => 'Molecular biology',
+                                'parasitology' => 'Parasitology',
+                                'pharmacovigilance' => 'Pharmacovigilance',
+                                'protein_biology' => 'Protein biology',
+                                'qc_test_development' => 'QC test development',
+                                'quality_assurance' => 'Quality assurance',
+                                'registration' => 'Registration',
+                                'regulation' => 'Regulation',
+                                'safety_evaluation' => 'Safety evaluation',
+                                'social_sciences' => 'Social sciences',
+                                'statistics' => 'Statistics',
+                                'structural_biology' => 'Structural biology',
+                                'systems_biology' => 'Systems biology',
+                                'virology' => 'Virology',
+                            ];
+                        @endphp
+
+                        @foreach ($disciplineOptions as $value => $label)
+                            <div class="form-check">
+                                <input
+                                    class="form-check-input"
+                                    type="checkbox"
+                                    name="discipline[]"
+                                    id="discipline_{{ $value }}"
+                                    value="{{ $value }}"
+                                    @checked(in_array($value, old('discipline', $entity->discipline ?? [])))
+                                >
+                                <label class="form-check-label" for="discipline_{{ $value }}">
+                                    {{ $label }}
+                                </label>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label">Stage of Vaccine Development</label>
+                    <div style="max-height: 250px; overflow-y: auto; border: 1px solid #ced4da; border-radius: .375rem; padding: 0.75rem;">
+                        @php
+                            $vaccineStageOptions = [
+                                'adjuvants' => 'Adjuvants',
+                                'antigen_discovery' => 'Antigen discovery and immunogen design',
+                                'clinical_trials' => 'Clinical trials',
+                                'commercialisation' => 'Commercialisation',
+                                'correlates_of_protection' => 'Correlates of protection – immunomonitoring',
+                                'deployment' => 'Deployment',
+                                'field_trials' => 'Field trials',
+                                'marketing' => 'Marketing',
+                                'preclinical_trials' => 'Pre-clinical trials',
+                                'vaccine_delivery' => 'Vaccine delivery',
+                            ];
+                        @endphp
+
+                        @foreach ($vaccineStageOptions as $value => $label)
+                            <div class="form-check">
+                                <input
+                                    class="form-check-input"
+                                    type="checkbox"
+                                    name="vaccine_stage[]"
+                                    id="vaccine_stage_{{ $value }}"
+                                    value="{{ $value }}"
+                                    @checked(in_array($value, old('vaccine_stage', $entity->vaccine_stage ?? [])))
+                                >
+                                <label class="form-check-label" for="vaccine_stage_{{ $value }}">
+                                    {{ $label }}
+                                </label>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+            </div>
+
             <hr class="my-4">
 
             <h4 class="mb-3 text-primary">Research</h4>
