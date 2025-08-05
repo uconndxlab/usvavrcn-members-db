@@ -53,13 +53,27 @@
                                 </h5>
                                 <p class="card-text text-muted mb-1">
                                     <strong>{{ ucfirst($entity->entity_type) }}</strong>
+                                    @if ($entity->entity_type === 'group')
+                                        <span class="badge bg-secondary ms-2">{{ $entity->members()->count() }} members</span>
+                                    @endif
                                     @if ($entity->email)
                                         <br>{{ $entity->email }}
                                     @endif
                                 </p>
                                 <p class="card-text">
-                                    {{ Str::limit($entity->description, 100) }}
+                                    {{ Str::limit($entity->description ?? $entity->biography, 100) }}
                                 </p>
+                                
+                                @if ($entity->entity_type === 'group')
+                                    <div class="mt-2">
+                                        <a href="{{ route('groups.posts', $entity) }}" class="btn btn-sm btn-outline-primary">
+                                            <i class="bi bi-chat-dots"></i> View Posts
+                                        </a>
+                                        <a href="{{ route('groups.posts.create', $entity) }}" class="btn btn-sm btn-primary">
+                                            <i class="bi bi-plus"></i> Post
+                                        </a>
+                                    </div>
+                                @endif
                             </div>
                             <div class="card-footer d-flex justify-content-between align-items-center">
                                 <a href="{{ route('entities.edit', $entity) }}" class="btn btn-sm btn-warning">Edit</a>

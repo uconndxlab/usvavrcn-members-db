@@ -131,6 +131,79 @@
         </div>
     </div>
 
+    @if ($entity->entity_type === 'group')
+        <hr class="my-4">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h5>Group Members ({{ $entity->members()->count() }})</h5>
+                    <a href="{{ route('groups.posts', $entity) }}" class="btn btn-sm btn-outline-primary">
+                        <i class="bi bi-chat-dots"></i> View Posts
+                    </a>
+                </div>
+                
+                @if ($entity->members()->count() > 0)
+                    <div style="max-height: 300px; overflow-y: auto;">
+                        @foreach ($entity->members()->orderBy('name')->get() as $member)
+                            <div class="d-flex align-items-center mb-2 p-2 border rounded">
+                                <div class="flex-grow-1">
+                                    <a href="{{ route('entities.show', $member) }}" class="text-decoration-none fw-bold">
+                                        {{ $member->name }}
+                                    </a>
+                                    @if ($member->job_title)
+                                        <br><small class="text-muted">{{ $member->job_title }}</small>
+                                    @endif
+                                    @if ($member->email)
+                                        <br><small class="text-muted">{{ $member->email }}</small>
+                                    @endif
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                @else
+                    <p class="text-muted">No members yet.</p>
+                @endif
+            </div>
+            
+            <div class="col-md-6">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h5>Recent Posts</h5>
+                    <a href="{{ route('groups.posts.create', $entity) }}" class="btn btn-sm btn-primary">
+                        <i class="bi bi-plus"></i> New Post
+                    </a>
+                </div>
+                
+                @php
+                    $recentPosts = $entity->groupPosts()->with('author')->latest()->take(3)->get();
+                @endphp
+                
+                @if ($recentPosts->count() > 0)
+                    @foreach ($recentPosts as $post)
+                        <div class="card mb-2">
+                            <div class="card-body p-3">
+                                <div class="d-flex justify-content-between align-items-start mb-2">
+                                    <small class="fw-bold">{{ $post->author->name }}</small>
+                                    <small class="text-muted">{{ $post->created_at->diffForHumans() }}</small>
+                                </div>
+                                <p class="card-text small mb-0">{{ Str::limit($post->content, 150) }}</p>
+                            </div>
+                        </div>
+                    @endforeach
+                    <div class="text-center">
+                        <a href="{{ route('groups.posts', $entity) }}" class="btn btn-sm btn-outline-secondary">
+                            View All Posts
+                        </a>
+                    </div>
+                @else
+                    <p class="text-muted">No posts yet.</p>
+                    <a href="{{ route('groups.posts.create', $entity) }}" class="btn btn-sm btn-primary">
+                        Create First Post
+                    </a>
+                @endif
+            </div>
+        </div>
+    @endif
+
     {{-- Actions --}}
     <div class="d-flex justify-content-between mt-4">
         <a href="{{ route('entities.edit', $entity) }}" class="btn btn-warning">Edit</a>

@@ -7,19 +7,10 @@
         @csrf @method('PUT')
         @include('entities.partials.form')
 
-        <div class="mb-3">
-            <label for="tags" class="form-label">Tags</label>
-            <select name="tags[]" id="tags" class="form-select" multiple>
-                @foreach ($tags as $tag)
-                    <option value="{{ $tag->id }}" @selected(in_array($tag->id, old('tags', $selectedTags)))>
-                        {{ $tag->name }}
-                    </option>
-                @endforeach
-            </select>
-            <small class="text-muted">Hold Ctrl (Cmd on Mac) to select multiple tags.</small>
+        <div class="d-flex gap-2 mt-4">
+            <button type="submit" class="btn btn-primary">Save Changes</button>
+            <a href="{{ route('entities.show', $entity) }}" class="btn btn-secondary">Cancel</a>
         </div>
-
-        <button type="submit" class="btn btn-primary">Save Changes</button>
     </form>
 </div>
 @endsection
