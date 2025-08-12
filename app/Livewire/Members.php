@@ -68,7 +68,6 @@ class Members extends Component
 
     public function removeTag($tagId)
     {
-        // print selected tags
         unset($this->selectedTagIds[$tagId]);
         $this->refreshQuery();
     }
