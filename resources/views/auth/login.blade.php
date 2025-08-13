@@ -44,6 +44,10 @@
                         <div class="text-center mt-3">
                             <p>Don't have an account? <a href="{{ route('register') }}">Register here</a></p>
                         </div>
+
+                        <div class="text-center mt-3">
+                            <a href="{{ route('forgot-password') }}">Forgot your password?</a>
+                        </div>
                     </form>
                 </div>
             </div>

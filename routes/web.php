@@ -5,9 +5,12 @@ use App\Http\Controllers\EntityController;
 use App\Http\Controllers\TagController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\PasswordController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\GroupController;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Password;
 
 // Authentication Routes
 Route::get('login', [LoginController::class, 'showLoginForm'])->name('login');
@@ -16,6 +19,13 @@ Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 
 Route::get('register', [RegisterController::class, 'showRegistrationForm'])->name('register');
 Route::post('register', [RegisterController::class, 'register']);
+
+Route::middleware(['guest'])->group(function() {
+    Route::get('/forgot-password', [PasswordController::class, 'showForgotPassword'])->name('forgot-password');
+    Route::post('/forgot-password', [PasswordController::class, 'forgotPassword'])->name('forgot-password');
+    Route::get('/reset-password/{token}', [PasswordController::class, 'showResetPassword'])->name('password.reset');
+    Route::post('/reset-password', [PasswordController::class, 'resetPassword'])->name('password.update');
+});
 
 // Redirect root to members (new default)
 Route::get('/', function() {
