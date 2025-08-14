@@ -55,7 +55,7 @@
                                     <div class="d-flex flex-column align-items-center my-2">
                                         @foreach($category->tags as $tag)
                                             @if (isset($selectedTagIds[$tag->id]))
-                                                <span class="badge bg-secondary me-1 mb-1">
+                                                <span class="badge bg-primary me-1 mb-1">
                                                     {{ $tag->name }}
                                                     <button type="button" class="btn-close btn-close-white btn-sm" wire:click="removeTag({{ $tag->id }})"></button>
                                                 </span>
