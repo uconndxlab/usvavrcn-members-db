@@ -31,7 +31,7 @@ class CreateUsersFromMembers extends Command
     {
         $members = Entity::where('entity_type', 'person')
             ->whereNotNull('email')
-            ->get(['email', 'name']);
+            ->get(['id', 'email', 'name']);
 
         $accountsCreated = 0;
 
@@ -43,6 +43,7 @@ class CreateUsersFromMembers extends Command
                 'email' => $member->email,
             ], [
                 'name' => $member->name,
+                'entity_id' => $member->id,
                 'password' => Hash::make(Str::random(16)), // This line is very slow (Hash::make)
             ]);
 
