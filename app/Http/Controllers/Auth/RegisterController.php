@@ -29,6 +29,15 @@ class RegisterController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
+        $entity = $user->entity()->create([
+            'entity_type' => 'person',
+            'name' => $user->name,
+            'email' => $user->email,
+        ]);
+
+        // link user to this entity
+        $user->update(['entity_id' => $entity->id]);
+
         Auth::login($user);
 
         return redirect('/');
