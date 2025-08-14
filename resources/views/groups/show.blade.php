@@ -25,7 +25,7 @@
 
                     <!-- Group Posts -->
                     <h5 class="mb-3">Recent Posts</h5>
-                    @forelse($group->posts->sortByDesc('created_at')->take(5) as $post)
+                    @forelse($group->groupPosts->sortByDesc('created_at')->take(5) as $post)
                         <div class="card mb-3">
                             <div class="card-body">
                                 <h6 class="card-title">{{ $post->title }}</h6>
