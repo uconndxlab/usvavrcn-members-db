@@ -1,4 +1,12 @@
 <div class="container">
+
+    <style>
+        .light-placeholder::placeholder {
+            color: white !important;
+            opacity: 0.9;
+        }
+    </style>
+
     <!-- Tab Navigation -->
     <ul class="nav nav-tabs mb-4" role="tablist">
         <li class="nav-item" role="presentation">
@@ -24,37 +32,41 @@
     {{-- Search/Selectors --}}
     @if($tagCategories && $tagCategories->isNotEmpty())
         <div class="container mb-4">
-            <div class="row align-items-start fw-bold py-2 flex-nowrap overflow-auto">
-                <div class="col d-flex flex-column align-items-center px-1 h-100">
+            <div class="row align-items-start fw-bold py-2">
+                <div class="col-auto d-flex flex-column align-items-center px-1" style="max-width: 220px;">
                     <small class="ps-2 pb-0 text-muted text-start w-100 text-uppercase text-nowrap" style="font-size: 0.7em;">
                         {{-- blank header text so that the input below will align with the other items --}}
                         &nbsp;
                     </small>
-                    <input type="text" class="form-control w-auto px-3" style="border-radius: 50px;" placeholder="Search by name..." wire:model.live.debounce.250ms="searchTerm">
+                    <input wire:model.live.debounce.250ms="searchTerm" type="text" class="light-placeholder text-white form-control px-3 bg-dark" style="border-radius: 50px; width: 180px;" placeholder="Search by name...">
                 </div>
-                @foreach($tagCategories as $category)
-                    @if($category->tags && $category->tags->isNotEmpty())
-                        <div class="col d-flex flex-column justify-content-center align-items-center px-1">
-                            <small class="ps-2 pb-0 text-muted text-start w-100 text-uppercase text-nowrap" style="font-size: 0.7em;">{{ $category->name }}</small>
-                            <select class="form-select w-auto fw-semibold py-2" style="border-radius: 50px;" wire:model.change="selection">
-                                <option value="all">All {{ $category->name }}</option>
-                                @foreach($category->tags as $tag)
-                                    <option @if(isset($selectedTagIds[$tag->id])) disabled @endif value="{{ $tag->id }}">{{ $tag->name }}</option>
-                                @endforeach
-                            </select>
-                            <div class="mt-2 d-flex flex-wrap justify-content-center">
-                                @foreach($category->tags as $tag)
-                                    @if (isset($selectedTagIds[$tag->id]))
-                                        <span class="badge bg-secondary me-1 mb-1">
-                                            {{ $tag->name }}
-                                            <button type="button" class="btn-close btn-close-white btn-sm" wire:click="removeTag({{ $tag->id }})"></button>
-                                        </span>
-                                    @endif
-                                @endforeach
-                            </div>
-                        </div>
-                    @endif
-                @endforeach
+                <div class="col overflow-hidden rounded" style="background-color: rgba(0,0,0,0.025);">
+                    <div class="d-flex align-items-start overflow-auto" style="white-space: nowrap;">
+                        @foreach($tagCategories as $category)
+                            @if($category->tags && $category->tags->isNotEmpty())
+                                <div class="d-flex flex-column justify-content-center align-items-center px-1 flex-shrink-0">
+                                    <small class="ps-2 pb-0 text-muted text-start w-100 text-uppercase text-nowrap" style="font-size: 0.7em;">{{ $category->name }}</small>
+                                    <select class="form-select fw-semibold py-2" style="border-radius: 50px;" wire:model.change="selection">
+                                        <option value="all">All {{ $category->name }}</option>
+                                        @foreach($category->tags as $tag)
+                                            <option @if(isset($selectedTagIds[$tag->id])) disabled @endif value="{{ $tag->id }}">{{ $tag->name }}</option>
+                                        @endforeach
+                                    </select>
+                                    <div class="d-flex flex-column align-items-center my-2">
+                                        @foreach($category->tags as $tag)
+                                            @if (isset($selectedTagIds[$tag->id]))
+                                                <span class="badge bg-secondary me-1 mb-1">
+                                                    {{ $tag->name }}
+                                                    <button type="button" class="btn-close btn-close-white btn-sm" wire:click="removeTag({{ $tag->id }})"></button>
+                                                </span>
+                                            @endif
+                                        @endforeach
+                                    </div>
+                                </div>
+                            @endif
+                        @endforeach
+                    </div>
+                </div>
             </div>
         </div>
     @endif
@@ -62,8 +74,8 @@
     <hr>
 
     <!-- Members Table -->
-    <div class="card">
-        <div class="card-body">
+    <div class="card bg-light rounded">
+        <div class="card-body bg-light text-dark rounded">
             <div class="table-responsive">
                 <table class="table table-hover">
                     <thead>
