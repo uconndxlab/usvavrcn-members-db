@@ -40,6 +40,7 @@ class Groups extends Component
         $this->tagCategories = TagCategory::with('tags')->get();
     }
 
+    // TODO: I'm not sure if groups have relations to group by category (eg: teams, focus, etc.)
     public function selectGroup($group)
     {
         $this->selectedGroup = $group;

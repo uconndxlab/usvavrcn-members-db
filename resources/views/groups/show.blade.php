@@ -2,6 +2,27 @@
 
 @section('content')
 <div class="container">
+    @if(session('success'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <i class="bi bi-check-circle"></i> {{ session('success') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
+
+    @if(session('error'))
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <i class="bi bi-exclamation-triangle"></i> {{ session('error') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
+
+    @if(session('info'))
+        <div class="alert alert-info alert-dismissible fade show" role="alert">
+            <i class="bi bi-info-circle"></i> {{ session('info') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
+
     <div class="row">
         <div class="col-md-8">
             <div class="card">
@@ -14,6 +35,12 @@
                             @endif
                         </div>
                         <div class="btn-group">
+                            <form method="POST" action="{{ route('groups.join', $group) }}" class="d-inline">
+                                @csrf
+                                <button type="submit" class="btn btn-outline-primary">
+                                    <i class="bi bi-person-plus"></i> Join Group
+                                </button>
+                            </form>
                             <a href="{{ route('entities.edit', $group) }}" class="btn btn-outline-primary">
                                 <i class="bi bi-pencil"></i> Edit
                             </a>

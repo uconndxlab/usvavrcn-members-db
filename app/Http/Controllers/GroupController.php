@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Entity;
 use App\Models\TagCategory;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class GroupController extends Controller
 {
@@ -43,5 +45,43 @@ class GroupController extends Controller
         $group->load(['tags', 'tags.category', 'members', 'posts']);
         
         return view('groups.show', compact('group'));
+    }
+
+    public function join(Entity $group)
+    {
+        if ($group->entity_type !== 'group') {
+            abort(404);
+        }
+
+        $user = Auth::user();
+        
+        if (!$user->entity) {
+            return redirect()->route('groups.show', $group)->with('error', 'Your user does not have an entity!');
+        }
+
+        if ($group->members()->where('entity_id', $user->entity->id)->exists()) {
+            return redirect()->route('groups.show', $group)->with('info', 'You are already a member of this group!');
+        }
+
+        $group->members()->attach($user->entity->id);
+
+        return redirect()->route('groups.show', $group)->with('success', 'You have successfully joined the group.');
+    }
+
+    public function leave(Entity $group)
+    {
+        if ($group->entity_type !== 'group') {
+            abort(404);
+        }
+
+        $user = Auth::user();
+        
+        if (!$user->entity) {
+            return redirect()->route('groups.show', $group)->with('error', 'Profile not found.');
+        }
+
+        $group->members()->detach($user->entity->id);
+
+        return redirect()->route('groups.show', $group)->with('success', 'You have left the group successfully.');
     }
 }
