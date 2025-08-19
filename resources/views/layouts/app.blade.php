@@ -49,6 +49,9 @@
                     <button type="submit" class="dropdown-item">Logout</button>
                   </form>
                 </li>
+                <li>
+                  <a class="dropdown-item" href="{{ route('entities.edit', Auth::user()->entity) }}">Profile</a>
+                </li>
               </ul>
             </li>
           @else
