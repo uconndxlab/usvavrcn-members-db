@@ -48,7 +48,7 @@
     {{-- All groups --}}
     <div class="d-flex align-items-center my-3">
         <h4 class="text-dark fw-bold me-3">All Groups</h4>
-        <div class="btn-group btn-group-sm border p-2" style="border-radius: 50px; background-color: rgba(0,0,0,0.05)" role="group" aria-label="Filter by group type">
+        <div class="btn-group btn-group-sm border p-1" style="border-radius: 50px; background-color: rgba(0,0,0,0.05)" role="group" aria-label="Filter by group type">
             <button type="button"
                     class="btn @if($selectedGroup == 'all') btn-light @endif fw-semibold"
                     style="border-radius: 50px"

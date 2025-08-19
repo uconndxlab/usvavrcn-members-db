@@ -106,7 +106,7 @@
                         </div>
                         <div class="col-6">
                             <div class="text-center">
-                                <h4 class="text-info mb-0">{{ $group->posts->count() }}</h4>
+                                <h4 class="text-info mb-0">{{ $group->groupPosts->count() }}</h4>
                                 <small class="text-muted">Posts</small>
                             </div>
                         </div>

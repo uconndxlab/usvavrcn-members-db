@@ -100,7 +100,8 @@ class EntityController extends Controller
         $allPeople = Entity::where('entity_type', 'person')->orderBy('name')->get();
         $selectedMembers = $entity->members->pluck('id')->toArray();
         
-        return view('entities.show', compact('entity', 'tagCategories', 'selectedTags', 'allPeople', 'selectedMembers'));
+        // return view('entities.show', compact('entity', 'tagCategories', 'selectedTags', 'allPeople', 'selectedMembers'));
+        return view('entities.show2', compact('entity', 'tagCategories', 'selectedTags', 'allPeople', 'selectedMembers'));
     }
 
     public function edit(Entity $entity)
