@@ -19,7 +19,7 @@ class MemberController extends Controller
             abort(404);
         }
         
-        $member->load(['tags', 'tags.category', 'memberOf']);
+        $member->load(['tags', 'tags.category']);
         
         return view('members.show', compact('member'));
     }

@@ -30,7 +30,7 @@
     </div>
 
     {{-- List of my groups --}}
-    @if (!Auth::user()->entity->groups->isEmpty())
+    @if (Auth::user() && !Auth::user()->entity->groups->isEmpty())
 
         <div class="row">
             @foreach (Auth::user()->entity->groups as $group)
