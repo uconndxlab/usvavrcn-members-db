@@ -3,8 +3,6 @@
 namespace App\Livewire;
 
 use App\Models\Entity;
-use App\Models\TagCategory;
-use Illuminate\Support\Facades\Log;
 use Livewire\Component;
 
 class Group extends Component
