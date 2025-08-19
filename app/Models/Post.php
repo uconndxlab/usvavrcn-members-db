@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Post extends Model
 {
@@ -12,7 +13,8 @@ class Post extends Model
         'target_group_id', 
         'content',
         'start_time',
-        'end_time'
+        'end_time',
+        'parent_id'
     ];
 
     protected $casts = [
@@ -50,5 +52,13 @@ class Post extends Model
     public function scopePublic($query)
     {
         return $query->whereNull('target_group_id');
+    }
+
+    /**
+     * Query children posts
+     */
+    public function children(): HasMany
+    {
+        return $this->hasMany(Post::class, 'parent_id');
     }
 }
