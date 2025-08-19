@@ -32,32 +32,32 @@ Route::get('/', function() {
     return redirect()->route('members.index');
 });
 
-// New Members and Groups routes
-Route::get('members', [MemberController::class, 'index'])->name('members.index');
-Route::get('members/{member}', [MemberController::class, 'show'])->name('members.show');
+Route::middleware(['auth'])->group(function() {
+    // New Members and Groups routes
+    Route::get('members', [MemberController::class, 'index'])->name('members.index');
+    Route::get('members/{member}', [MemberController::class, 'show'])->name('members.show');
 
-Route::get('groups', [GroupController::class, 'index'])->name('groups.index');
-Route::get('groups/{group}', [GroupController::class, 'show'])->name('groups.show');
-Route::post('groups/{group}/join', [GroupController::class, 'join'])->name('groups.join');
-Route::post('groups/{group}/leave', [GroupController::class, 'leave'])->name('groups.leave');
+    Route::get('groups', [GroupController::class, 'index'])->name('groups.index');
+    Route::get('groups/{group}', [GroupController::class, 'show'])->name('groups.show');
+    Route::post('groups/{group}/join', [GroupController::class, 'join'])->name('groups.join');
+    Route::post('groups/{group}/leave', [GroupController::class, 'leave'])->name('groups.leave');
 
-// Keep existing entity routes for CRUD operations
-Route::get('entities', [EntityController::class, 'index'])->name('entities.index');
-Route::get('entities/create', [EntityController::class, 'create'])->name('entities.create');
-Route::post('entities', [EntityController::class, 'store'])->name('entities.store');
-Route::get('entities/{entity}', [EntityController::class, 'show'])->name('entities.show');
-Route::get('entities/{entity}/edit', [EntityController::class, 'edit'])->name('entities.edit');
-Route::put('entities/{entity}', [EntityController::class, 'update'])->name('entities.update');
-Route::delete('entities/{entity}', [EntityController::class, 'destroy'])->name('entities.destroy');
+    // Keep existing entity routes for CRUD operations
+    Route::get('entities', [EntityController::class, 'index'])->name('entities.index');
+    Route::get('entities/create', [EntityController::class, 'create'])->name('entities.create');
+    Route::post('entities', [EntityController::class, 'store'])->name('entities.store');
+    Route::get('entities/{entity}', [EntityController::class, 'show'])->name('entities.show');
+    Route::get('entities/{entity}/edit', [EntityController::class, 'edit'])->name('entities.edit');
+    Route::put('entities/{entity}', [EntityController::class, 'update'])->name('entities.update');
+    Route::delete('entities/{entity}', [EntityController::class, 'destroy'])->name('entities.destroy');
 
-// Group-specific routes
-Route::get('groups/{group}/posts', [PostController::class, 'index'])->name('groups.posts');
-Route::get('groups/{group}/posts/create', [PostController::class, 'create'])->name('groups.posts.create');
-Route::post('groups/{group}/posts', [PostController::class, 'store'])->name('groups.posts.store');
+    // Group-specific routes
+    Route::get('groups/{group}/posts', [PostController::class, 'index'])->name('groups.posts');
+    Route::get('groups/{group}/posts/create', [PostController::class, 'create'])->name('groups.posts.create');
+    Route::post('groups/{group}/posts', [PostController::class, 'store'])->name('groups.posts.store');
 
-// Public posts
-Route::get('posts', [PostController::class, 'publicPosts'])->name('posts.public');
+    // Public posts
+    Route::get('posts', [PostController::class, 'publicPosts'])->name('posts.public');
 
-Route::resource('tags', TagController::class)->except(['show']);
-
-
+    Route::resource('tags', TagController::class)->except(['show']);
+});
