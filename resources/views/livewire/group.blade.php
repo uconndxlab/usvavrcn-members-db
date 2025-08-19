@@ -35,7 +35,7 @@
         </div>
     </div>
     
-    {{-- list out members of this group --}}
+    {{-- Members view --}}
     @if ($selectedTab == 'members')
         <div class="card bg-light rounded mt-4">
             <div class="card-body bg-light text-dark rounded">
@@ -127,35 +127,18 @@
         </div>
     @endif
     
-    {{-- list out messages/forum of this group --}}
+    {{-- Forum view --}}
     @if ($selectedTab == 'forum')
         <div class="mb-4 mt-4 d-flex justify-content-between">
             <p class="fw-bolder h4">Recent Posts</p>
-            <button class="btn btn-dark btn-sm px-4" style="border-radius: 50px">Make Post</button>
+            <div class="text-center">
+                <a href="{{ route('groups.posts.create', ['group' => $group]) }}" class="btn btn-dark btn-sm px-4 py-2 text-decoration-none" style="border-radius: 50px">Make Post</a>
+            </div>
         </div>
-        {{-- list out posts in cards, button right corner 2 buttons: view, comment. display title of post, the post content. in bottom left corner: date, comment count (with icon) and "created by" + author. no mistakes--}}
         <div class="row">
-            @foreach($group->groupPosts()->get() as $post)
+            @foreach($group->groupPosts->where('parent_id', null)->sortByDesc('created_at') as $post)
                 <div class="col-md-12">
-                    <div class="card mb-4">
-                        <div class="card-body">
-                            <h5 class="card-text border-0">Post by {{ $post->author->name }}</h5>
-                            <p class="card-text text-muted">{{ $post->content }}</p>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div class="d-flex align-items-center gap-2">
-                                    <small class="text-muted me-2">{{ $post->created_at->diffForHumans() }}</small>
-                                    <small class="text-muted me-2"><i class="bi bi-chat"></i> 0</small>
-                                    <small class="text-muted">Created by {{ $post->author->name }}</small>
-                                </div>
-                                <div>
-                                    {{-- <a href="{{ route('posts.show', $post) }}" class="btn btn-outline-primary btn-sm">View</a>
-                                    <a href="{{ route('posts.comment', $post) }}" class="btn btn-outline-secondary btn-sm">Comment</a> --}}
-                                    <a href="" class="btn text-white px-3 bg-dark btn-sm" style="border-radius: 50px">View</a>
-                                    <a href="" class="btn text-white px-3 bg-primary btn-sm" style="border-radius: 50px">Comment</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <livewire:post-card :$post :group="$group" :key="$post->id" />
                 </div>
             @endforeach
         </div>

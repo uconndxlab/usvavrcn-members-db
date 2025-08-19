@@ -2,6 +2,9 @@
 
 @section('content')
 <div class="container">
+    <div class="alert alert-warning" role="alert">
+        TODO: remove this page, replace with entities page (switch check for groups)
+    </div>
     @if(session('success'))
         <div class="alert alert-success alert-dismissible fade show" role="alert">
             <i class="bi bi-check-circle"></i> {{ session('success') }}

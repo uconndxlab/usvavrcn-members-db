@@ -1,0 +1,53 @@
+<div class="mb-4">
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-text border-0">Post by {{ $post->author->name }}</h5>
+            <p class="card-text text-muted">{{ $post->content }}</p>
+            <div class="d-flex justify-content-between align-items-center">
+                <div class="d-flex align-items-center gap-2">
+                    <small class="text-muted me-2">{{ $post->created_at->diffForHumans() }}</small>
+                    @if ($post->parent_id == null)
+                        <small class="text-muted me-2"><i class="bi bi-chat"></i> {{ $post->children->count() }}</small>
+                    @endif
+                    <small class="text-muted">Created by {{ $post->author->name }}</small>
+                </div>
+                <div>
+                    {{-- @TODO: view post when clicking on it.. this page doesn't exist yet. --}}
+                    <a href="" class="btn text-white px-3 bg-dark btn-sm" style="border-radius: 50px">View</a>
+                    @if ($commentsEnabled)
+                        <button wire:click="startCommenting" class="btn text-white px-3 bg-primary btn-sm" style="border-radius: 50px">Comment</button>
+                    @endif
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{-- commenting box --}}
+    @if ($isCommenting)
+        <div class="mt-2 p-3">
+            <div class="position-relative p-3 pb-2" style="border-radius: 20px; background-color: rgba(0,0,0,0.05)">
+                <textarea wire:model="comment" maxlength="5000" class="form-control bg-transparent mb-2 border-0" rows="3" placeholder="Write a comment..." style="resize:none;"></textarea>
+                <div class="d-flex justify-content-end gap-2">
+                    <button wire:click="stopCommenting" class="btn btn-sm bg-danger text-white px-3" style="border-radius: 50px" title="Cancel">
+                        <i class="bi bi-x text-white"></i> Cancel
+                    </button>
+                    <button wire:click="postComment" class="btn btn-sm bg-primary text-white px-3" style="border-radius: 50px" title="Submit">
+                        <i class="bi bi-send"></i> Comment
+                    </button>
+                </div>
+            </div>
+        </div>
+    @endif
+
+
+    {{-- recursively import children posts (but we are only limitting commenting on root level posts aka: no commenting on comments) --}}
+    @if ($post->parent_id == null)
+        <div class="mt-2 ms-3 ps-3 border-start">
+            @foreach($post->children->sortByDesc('created_at') as $childPost)
+                <livewire:post-card :post="$childPost" :group="$group" :key="$childPost->id" />
+            @endforeach
+        </div>
+    @endif
+
+    
+</div>
