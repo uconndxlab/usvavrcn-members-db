@@ -47,9 +47,7 @@ class Groups extends Component
         $query = Entity::where('entity_type', 'group');
 
         if ($this->selectedGroup != "all") {
-            $query->whereHas('tags', function($q) {
-                $q->where('tags.id', $this->selectedGroup);
-            });
+            $query->where('name', 'like', "{$group}%");
         }
 
         $this->groups = $query->with(['tags', 'tags.category', 'members'])->get();

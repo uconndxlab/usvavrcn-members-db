@@ -54,13 +54,28 @@
                     style="border-radius: 50px"
                     wire:click="selectGroup('all')"
             >All Groups</button>
-            @foreach ($tagCategories as $category)
+            <button type="button"
+                    class="btn @if($selectedGroup == 'Team:') btn-light @endif fw-semibold"
+                    style="border-radius: 50px"
+                    wire:click="selectGroup('Team:')"
+            >Teams</button>
+            <button type="button"
+                    class="btn @if($selectedGroup == 'Focus:') btn-light @endif fw-semibold"
+                    style="border-radius: 50px"
+                    wire:click="selectGroup('Focus:')"
+            >Focuses</button>
+            <button type="button"
+                    class="btn @if($selectedGroup == 'Committee:') btn-light @endif fw-semibold"
+                    style="border-radius: 50px"
+                    wire:click="selectGroup('Committee:')"
+            >Committees</button>
+            {{-- @foreach ($tagCategories as $category)
                 <button type="button"
                         class="btn @if($selectedGroup == $category->id) btn-light @endif fw-semibold"
                         style="border-radius: 50px"
                         wire:click="selectGroup({{ $category->name }})"
                 >{{ $category->name }}</button>
-            @endforeach
+            @endforeach --}}
         </div>
     </div>
 
