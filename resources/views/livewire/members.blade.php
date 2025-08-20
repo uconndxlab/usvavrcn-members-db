@@ -32,15 +32,9 @@
     {{-- Search/Selectors --}}
     @if($tagCategories && $tagCategories->isNotEmpty())
         <div class="container mb-4">
-            <div class="row align-items-start fw-bold py-2">
-                <div class="col-auto d-flex flex-column align-items-center px-1" style="max-width: 220px;">
-                    <small class="ps-2 pb-0 text-muted text-start w-100 text-uppercase text-nowrap" style="font-size: 0.7em;">
-                        {{-- blank header text so that the input below will align with the other items --}}
-                        &nbsp;
-                    </small>
-                    <input wire:model.live.debounce.250ms="searchTerm" type="text" class="light-placeholder text-white form-control px-3 bg-dark rounded-pill" style="width: 180px;" placeholder="Search by name...">
-                </div>
-                <div class="col overflow-hidden rounded" style="background-color: rgba(0,0,0,0.025);">
+            <div class="row align-items-start fw-bold py-2 flex-column flex-md-row">
+                {{-- Tag categories - appears first on mobile, side by side on desktop --}}
+                <div class="col overflow-hidden rounded order-1 order-md-2 mb-3 mb-md-0" style="background-color: rgba(0,0,0,0.025);">
                     <div class="d-flex align-items-start overflow-auto" style="white-space: nowrap;">
                         @foreach($tagCategories as $category)
                             @if($category->tags && $category->tags->isNotEmpty())
@@ -66,6 +60,13 @@
                             @endif
                         @endforeach
                     </div>
+                </div>
+                <div class="col-12 col-md-auto d-flex flex-column align-items-center justify-content-center px-1 order-2 order-md-1">
+                    <small class="ps-2 pb-0 text-muted text-start w-100 text-uppercase text-nowrap d-none d-md-block" style="font-size: 0.7em;">
+                        {{-- blank header text so that the input below will align with the other items on desktop --}}
+                        &nbsp;
+                    </small>
+                    <input wire:model.live.debounce.250ms="searchTerm" type="text" class="light-placeholder text-white form-control px-3 bg-dark rounded-pill" style="width: 180px;" placeholder="Search by name...">
                 </div>
             </div>
         </div>
