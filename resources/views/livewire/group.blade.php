@@ -7,12 +7,12 @@
             @if (!Auth::user()->entity->groups->contains($group))
                 <form method="POST" action="{{ route('groups.join', $group) }}" class="d-inline">
                     @csrf
-                    <button type="submit" class="btn bg-primary text-white px-4" style="border-radius: 50px;">Join Group</button>
+                    <button type="submit" class="btn bg-primary text-white rounded-pill px-4">Join Group</button>
                 </form>
             @else
                 <form method="POST" action="{{ route('groups.leave', $group) }}" class="d-inline">
                     @csrf
-                    <button type="submit" class="btn btn-outline-danger px-4" style="border-radius: 50px;"
+                    <button type="submit" class="btn btn-outline-danger rounded-pill px-4"
                         onclick="return confirm('Are you sure you want to leave this group?');"
                     >Leave Group</button>
                 </form>
@@ -21,15 +21,13 @@
     </div>
 
     <div class="d-flex align-items-center my-3">
-        <div class="btn-group btn-group-sm border p-1" style="border-radius: 50px; background-color: rgba(0,0,0,0.05)" role="group" aria-label="Filter by group type">
+        <div class="btn-group btn-group-sm border p-1 rounded-pill" style="background-color: rgba(0,0,0,0.05)" role="group" aria-label="Filter by group type">
             <button type="button"
-                    class="btn @if($selectedTab == 'members') btn-light @endif fw-semibold"
-                    style="border-radius: 50px"
+                    class="btn @if($selectedTab == 'members') btn-light @endif fw-semibold rounded-pill"
                     wire:click="$set('selectedTab', 'members')"
             >Members</button>
             <button type="button"
-                    class="btn @if($selectedTab == 'forum') btn-light @endif fw-semibold"
-                    style="border-radius: 50px"
+                    class="btn @if($selectedTab == 'forum') btn-light @endif fw-semibold rounded-pill"
                     wire:click="$set('selectedTab', 'forum')"
             >Forum</button>
         </div>
@@ -132,7 +130,7 @@
         <div class="mb-4 mt-4 d-flex justify-content-between">
             <p class="fw-bolder h4">Recent Posts</p>
             <div class="text-center">
-                <a href="{{ route('groups.posts.create', ['group' => $group]) }}" class="btn btn-dark btn-sm px-4 py-2 text-decoration-none" style="border-radius: 50px">Make Post</a>
+                <a href="{{ route('groups.posts.create', ['group' => $group]) }}" class="btn btn-dark btn-sm px-4 py-2 text-decoration-none rounded-pill">Make Post</a>
             </div>
         </div>
         <div class="row">

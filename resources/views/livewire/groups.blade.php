@@ -16,7 +16,7 @@
     {{-- Title heading --}}
     <div class="text-center mb-4">
         <h1 class="text-dark fw-normal"><strong>Groups</strong></h1>
-        <div class="text-light bg-primary py-2 px-4 align-middle d-inline-block w-auto" style="border-radius: 50px;">
+        <div class="text-light bg-primary py-2 px-4 align-middle d-inline-block w-auto rounded-pill">
             <p class="p-0 m-0">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
         </div>
     </div>
@@ -24,7 +24,7 @@
     {{-- My groups bar --}}
     <div class="d-flex justify-content-between align-items-center mb-3">
         <h4 class="text-dark fw-bold">My Groups</h4>
-        <a href="#" class="btn btn-sm bg-dark text-white py-2 px-3 text-underline-none fw-semibold" style="border-radius: 50px">
+        <a href="#" class="btn btn-sm bg-dark text-white py-2 px-3 text-underline-none fw-semibold rounded-pill">
             <i class="bi bi-pencil text-primary me-1"></i> Edit My Groups
         </a>
     </div>
@@ -48,31 +48,26 @@
     {{-- All groups --}}
     <div class="d-flex align-items-center my-3">
         <h4 class="text-dark fw-bold me-3">All Groups</h4>
-        <div class="btn-group btn-group-sm border p-1" style="border-radius: 50px; background-color: rgba(0,0,0,0.05)" role="group" aria-label="Filter by group type">
+        <div class="btn-group btn-group-sm border p-1 rounded-pill" style="background-color: rgba(0,0,0,0.05)" role="group" aria-label="Filter by group type">
             <button type="button"
-                    class="btn @if($selectedGroup == 'all') btn-light @endif fw-semibold"
-                    style="border-radius: 50px"
+                    class="btn @if($selectedGroup == 'all') btn-light @endif fw-semibold rounded-pill"
                     wire:click="selectGroup('all')"
             >All Groups</button>
             <button type="button"
-                    class="btn @if($selectedGroup == 'Team:') btn-light @endif fw-semibold"
-                    style="border-radius: 50px"
+                    class="btn @if($selectedGroup == 'Team:') btn-light @endif fw-semibold rounded-pill"
                     wire:click="selectGroup('Team:')"
             >Teams</button>
             <button type="button"
-                    class="btn @if($selectedGroup == 'Focus:') btn-light @endif fw-semibold"
-                    style="border-radius: 50px"
+                    class="btn @if($selectedGroup == 'Focus:') btn-light @endif fw-semibold rounded-pill"
                     wire:click="selectGroup('Focus:')"
             >Focuses</button>
             <button type="button"
-                    class="btn @if($selectedGroup == 'Committee:') btn-light @endif fw-semibold"
-                    style="border-radius: 50px"
+                    class="btn @if($selectedGroup == 'Committee:') btn-light @endif fw-semibold rounded-pill"
                     wire:click="selectGroup('Committee:')"
             >Committees</button>
             {{-- @foreach ($tagCategories as $category)
                 <button type="button"
-                        class="btn @if($selectedGroup == $category->id) btn-light @endif fw-semibold"
-                        style="border-radius: 50px"
+                        class="btn @if($selectedGroup == $category->id) btn-light @endif fw-semibold rounded-pill"
                         wire:click="selectGroup({{ $category->name }})"
                 >{{ $category->name }}</button>
             @endforeach --}}

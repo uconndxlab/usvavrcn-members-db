@@ -24,7 +24,7 @@
     {{-- Title heading --}}
     <div class="container text-center mb-4">
         <h1 class="text-dark fw-normal">Welcome to the <strong>USAVRCN</strong> Member Database</h1>
-        <div class="text-light bg-primary py-2 px-4 align-middle d-inline-block w-auto" style="border-radius: 50px;">
+        <div class="text-light bg-primary py-2 px-4 align-middle d-inline-block w-auto rounded-pill">
             <p class="p-0 m-0">Search, connect, and collaborate across the field of animal vaccinology.</p>
         </div>
     </div>
@@ -38,7 +38,7 @@
                         {{-- blank header text so that the input below will align with the other items --}}
                         &nbsp;
                     </small>
-                    <input wire:model.live.debounce.250ms="searchTerm" type="text" class="light-placeholder text-white form-control px-3 bg-dark" style="border-radius: 50px; width: 180px;" placeholder="Search by name...">
+                    <input wire:model.live.debounce.250ms="searchTerm" type="text" class="light-placeholder text-white form-control px-3 bg-dark rounded-pill" style="width: 180px;" placeholder="Search by name...">
                 </div>
                 <div class="col overflow-hidden rounded" style="background-color: rgba(0,0,0,0.025);">
                     <div class="d-flex align-items-start overflow-auto" style="white-space: nowrap;">
@@ -46,7 +46,7 @@
                             @if($category->tags && $category->tags->isNotEmpty())
                                 <div class="d-flex flex-column justify-content-center align-items-center px-1 flex-shrink-0">
                                     <small class="ps-2 pb-0 text-muted text-start w-100 text-uppercase text-nowrap" style="font-size: 0.7em;">{{ $category->name }}</small>
-                                    <select class="form-select fw-semibold py-2" style="border-radius: 50px;" wire:model.change="selection">
+                                    <select class="form-select fw-semibold py-2 rounded-pill" wire:model.change="selection">
                                         <option value="all">All {{ $category->name }}</option>
                                         @foreach($category->tags as $tag)
                                             <option @if(isset($selectedTagIds[$tag->id])) disabled @endif value="{{ $tag->id }}">{{ $tag->name }}</option>

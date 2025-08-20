@@ -13,9 +13,9 @@
                 </div>
                 <div>
                     {{-- @TODO: view post when clicking on it.. this page doesn't exist yet. --}}
-                    <a href="" class="btn text-white px-3 bg-dark btn-sm" style="border-radius: 50px">View</a>
+                    <a href="" class="btn text-white px-3 bg-dark btn-sm rounded-pill">View</a>
                     @if ($commentsEnabled)
-                        <button wire:click="startCommenting" class="btn text-white px-3 bg-primary btn-sm" style="border-radius: 50px">Comment</button>
+                        <button wire:click="startCommenting" class="btn text-white px-3 bg-primary btn-sm rounded-pill">Comment</button>
                     @endif
                 </div>
             </div>
@@ -28,10 +28,10 @@
             <div class="position-relative p-3 pb-2" style="border-radius: 20px; background-color: rgba(0,0,0,0.05)">
                 <textarea wire:model="comment" maxlength="5000" class="form-control bg-transparent mb-2 border-0" rows="3" placeholder="Write a comment..." style="resize:none;"></textarea>
                 <div class="d-flex justify-content-end gap-2">
-                    <button wire:click="stopCommenting" class="btn btn-sm bg-danger text-white px-3" style="border-radius: 50px" title="Cancel">
+                    <button wire:click="stopCommenting" class="btn btn-sm bg-danger text-white px-3 rounded-pill" title="Cancel">
                         <i class="bi bi-x text-white"></i> Cancel
                     </button>
-                    <button wire:click="postComment" class="btn btn-sm bg-primary text-white px-3" style="border-radius: 50px" title="Submit">
+                    <button wire:click="postComment" class="btn btn-sm bg-primary text-white px-3 rounded-pill" title="Submit">
                         <i class="bi bi-send"></i> Comment
                     </button>
                 </div>
