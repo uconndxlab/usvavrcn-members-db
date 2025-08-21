@@ -1,7 +1,7 @@
 <div class="mb-4">
     <div class="card">
         <div class="card-body">
-            <h5 class="card-text border-0">Post by {{ $post->author->name }}</h5>
+            <h5 class="card-text border-0 text-dark">Post by {{ $post->author->name }}</h5>
             <p class="card-text text-muted">{{ $post->content }}</p>
             <div class="d-flex justify-content-between align-items-center">
                 <div class="d-flex align-items-center gap-2">
@@ -13,7 +13,7 @@
                 </div>
                 <div>
                     {{-- @TODO: view post when clicking on it.. this page doesn't exist yet. --}}
-                    <a href="" class="btn text-white px-3 bg-dark btn-sm rounded-pill">View</a>
+                    <a href="" class="btn text-white px-3 bg-dark btn-sm rounded-pill text-decoration-none">View</a>
                     @if ($commentsEnabled)
                         <button wire:click="startCommenting" class="btn text-white px-3 bg-primary btn-sm rounded-pill">Comment</button>
                     @endif

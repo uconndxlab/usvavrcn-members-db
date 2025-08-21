@@ -54,7 +54,7 @@
                             <tr>
                                 <td>
                                     <div class="d-flex align-items-center">
-                                        <div class="avatar-sm bg-primary rounded-circle d-flex align-items-center justify-content-center text-white me-2">
+                                        <div class="avatar-sm bg-primary rounded-circle d-flex align-items-center justify-content-center text-white me-2" style="width: 30px; height: 30px; aspect-ratio: 1;">
                                             {{ substr($member->full_name, 0, 1) }}
                                         </div>
                                         <div>
@@ -127,8 +127,8 @@
     
     {{-- Forum view --}}
     @if ($selectedTab == 'forum')
-        <div class="mb-4 mt-4 d-flex justify-content-between">
-            <p class="fw-bolder h4">Recent Posts</p>
+        <div class="my-4 d-flex justify-content-between align-items-center">
+            <p class="fw-bolder h4 mb-0">Recent Posts ({{ $group->groupPosts->count() }})</p>
             <div class="text-center">
                 <a href="{{ route('groups.posts.create', ['group' => $group]) }}" class="btn btn-dark btn-sm px-4 py-2 text-decoration-none rounded-pill">Make Post</a>
             </div>
