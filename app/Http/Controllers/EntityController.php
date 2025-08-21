@@ -159,7 +159,11 @@ class EntityController extends Controller
             $entity->members()->sync($request->input('members', []));
         }
 
-        return redirect()->route('entities.show', $entity)->with('success', 'Entity updated.');
+        if ($entity->entity_type === 'group') {
+            return redirect()->route('groups.show', $entity)->with('success', 'Entity updated.');
+        } else {
+            return redirect()->route('members.show', $entity)->with('success', 'Entity updated.');
+        }
     }
 
     public function destroy(Entity $entity)
