@@ -7,19 +7,6 @@
         }
     </style>
 
-    <!-- Tab Navigation -->
-    <ul class="nav nav-tabs mb-4" role="tablist">
-        <li class="nav-item" role="presentation">
-            <a class="nav-link active" href="{{ route('members.index') }}">
-                <i class="bi bi-people"></i> Members
-            </a>
-        </li>
-        <li class="nav-item" role="presentation">
-            <a class="nav-link" href="{{ route('groups.index') }}">
-                <i class="bi bi-collection"></i> Groups
-            </a>
-        </li>
-    </ul>
 
     {{-- Title heading --}}
     <div class="container text-center mb-5">
@@ -79,7 +66,7 @@
 
     <!-- Members Table -->
     <div class="card rounded" style="background-color: rgba(0,0,0,0.05)">
-        <div class="card-body text-dark rounded pt-0 px-1">
+        <div class="card-body text-dark rounded py-0 px-1">
             <div class="table-responsive">
                 <table class="table table-hover">
                     <thead>

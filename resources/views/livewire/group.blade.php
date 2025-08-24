@@ -35,68 +35,32 @@
     
     {{-- Members view --}}
     @if ($selectedTab == 'members')
-        <div class="card bg-light rounded mt-4">
-            <div class="card-body bg-light text-dark rounded">
+
+        <div class="card rounded" style="background-color: rgba(0,0,0,0.05)">
+            <div class="card-body text-dark rounded py-0 px-1">
                 <div class="table-responsive">
                     <table class="table table-hover">
                         <thead>
                             <tr>
-                                <th class="bg-light text-dark">Name</th>
-                                <th class="bg-light text-dark">Company</th>
-                                <th class="bg-light text-dark">Email</th>
-                                <th class="bg-light text-dark">Tags</th>
-                                <th class="bg-light text-dark">Groups</th>
-                                <th class="bg-light text-dark">Actions</th>
+                                <th class="text-muted bg-transparent text-uppercase" style="font-size: 0.9em;">Name</th>
+                                <th class="text-muted bg-transparent text-uppercase" style="font-size: 0.9em;">Title</th>
+                                <th class="text-muted bg-transparent text-uppercase" style="font-size: 0.9em;">Company</th>
                             </tr>
                         </thead>
                         <tbody>
                             @forelse($group->members as $member)
-                            <tr>
-                                <td>
-                                    <div class="d-flex align-items-center">
-                                        <div class="avatar-sm bg-primary rounded-circle d-flex align-items-center justify-content-center text-white me-2" style="width: 30px; height: 30px; aspect-ratio: 1;">
-                                            {{ substr($member->full_name, 0, 1) }}
-                                        </div>
-                                        <div>
-                                            <strong>{{ $member->full_name }}</strong>
-                                            @if($member->title)
-                                                <br><small class="text-muted">{{ $member->title }}</small>
-                                            @endif
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>{{ $member->company ?? '-' }}</td>
-                                <td>
-                                    @if($member->email)
-                                        <a href="mailto:{{ $member->email }}">{{ $member->email }}</a>
+                            <tr
+                                style="cursor: pointer; @if($loop->first) border-top-left-radius: 0.5rem; border-top-right-radius: 0.5rem; @endif @if($loop->last) border-bottom-left-radius: 0.5rem; border-bottom-right-radius: 0.5rem; @endif"
+                                onclick="window.location.href='{{ route('members.show', $member) }}'">
+                                <td style="@if($loop->first) border-top-left-radius: 0.5rem; @endif @if($loop->last) border-bottom-left-radius: 0.5rem; @endif">
+                                    @if (empty($member->full_name))
+                                        <strong class="fst-italic">{{ $member->email }}</strong>
                                     @else
-                                        -
+                                        <strong>{{ $member->full_name }}</strong>
                                     @endif
                                 </td>
-                                <td>
-                                    @if($member->tags)
-                                        @foreach($member->tags as $tag)
-                                            <span class="badge bg-secondary me-1">{{ $tag->name }}</span>
-                                        @endforeach
-                                    @endif
-                                </td>
-                                <td>
-                                    @if($member->memberOf && $member->memberOf->isNotEmpty())
-                                        {{ $member->memberOf->count() }} group(s)
-                                    @else
-                                        -
-                                    @endif
-                                </td>
-                                <td>
-                                    <div class="btn-group btn-group-sm">
-                                        <a href="{{ route('members.show', $member) }}" class="btn btn-outline-primary">
-                                            <i class="bi bi-eye"></i>
-                                        </a>
-                                        <a href="{{ route('entities.edit', $member) }}" class="btn btn-outline-secondary">
-                                            <i class="bi bi-pencil"></i>
-                                        </a>
-                                    </div>
-                                </td>
+                                <td>{{ !empty($member->job_title) ? $member->job_title : '-' }}</td>
+                                <td style="@if($loop->first) border-top-right-radius: 0.5rem; @endif @if($loop->last) border-bottom-right-radius: 0.5rem; @endif">{{ !empty($member->company) ? $member->company : '-' }}</td>
                             </tr>
                             @empty
                             <tr>
@@ -114,20 +78,13 @@
                         </tbody>
                     </table>
                 </div>
-                {{-- TODO: Figure out livewire pagination --}}
-                {{--             
-                @if($members->hasPages())
-                    <div class="d-flex justify-content-center mt-3">
-                        {{ $members->links() }}
-                    </div>
-                @endif --}}
             </div>
         </div>
     @endif
     
     {{-- Forum view --}}
     @if ($selectedTab == 'forum')
-        <div class="my-4 d-flex justify-content-between align-items-center">
+        <div class="mt-4 mb-3 d-flex justify-content-between align-items-center">
             <p class="fw-bolder h4 mb-0">Recent Posts ({{ $group->groupPosts->count() }})</p>
             <div class="text-center">
                 <a href="{{ route('groups.posts.create', ['group' => $group]) }}" class="btn btn-dark btn-sm px-4 py-2 text-decoration-none rounded-pill">Make Post</a>

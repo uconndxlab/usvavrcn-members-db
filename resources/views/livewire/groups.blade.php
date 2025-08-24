@@ -1,17 +1,4 @@
 <div class="container">
-    <!-- Tab Navigation -->
-    <ul class="nav nav-tabs mb-4" role="tablist">
-        <li class="nav-item" role="presentation">
-            <a class="nav-link" href="{{ route('members.index') }}">
-                <i class="bi bi-people"></i> Members
-            </a>
-        </li>
-        <li class="nav-item" role="presentation">
-            <a class="nav-link active" href="{{ route('groups.index') }}">
-                <i class="bi bi-collection"></i> Groups
-            </a>
-        </li>
-    </ul>
 
     {{-- Title heading --}}
     <div class="text-center mb-4">

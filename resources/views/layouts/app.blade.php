@@ -15,14 +15,14 @@
 
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container">
-      <a class="navbar-brand" href="{{ url('/') }}">USAVRCN</a>
+      <a class="navbar-brand fw-semibold" href="{{ url('/') }}">USAVRCN Member Database</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
         <span class="navbar-toggler-icon"></span>
       </button>
       
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav me-auto">
-          <li class="nav-item">
+          {{-- <li class="nav-item">
             <a class="nav-link" href="{{ route('members.index') }}">Members</a>
           </li>
           <li class="nav-item">
@@ -33,12 +33,12 @@
           </li>
           <li class="nav-item">
             <a class="nav-link" href="{{ route('tags.index') }}">Tags</a>
-          </li>
+          </li> --}}
         </ul>
         
         <ul class="navbar-nav">
           @auth
-            <li class="nav-item dropdown">
+            {{-- <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
                 {{ Auth::user()->name }}
               </a>
@@ -53,6 +53,12 @@
                   <a class="dropdown-item" href="{{ route('entities.edit', Auth::user()->entity) }}">Profile</a>
                 </li>
               </ul>
+            </li> --}}
+            <li class="nav-item">
+              <form method="POST" action="{{ route('logout') }}">
+                @csrf
+                <button type="submit" class="nav-link btn btn-link px-0">Logout</button>
+              </form>
             </li>
           @else
             <li class="nav-item">
@@ -66,6 +72,38 @@
       </div>
     </div>
   </nav>
+
+  <!-- Tab Navigation -->
+  @php
+    $isGroupsPage = request()->routeIs('groups.*');
+  @endphp
+  <div class="container mt-3 d-flex justify-content-between">
+      <div class="btn-group btn-group p-1 rounded-pill" style="background-color: rgba(0,0,0,0.05)" role="group">
+          <button type="button"
+                  class="btn fw-semibold rounded-pill border-0 {{ !$isGroupsPage ? 'btn-light' : '' }}"
+                  @if(!$isGroupsPage) disabled @endif
+                  @if(!!$isGroupsPage) onclick="window.location.href='{{ route('members.index') }}'" @endif
+          >Member Database</button>
+          <button type="button"
+                  class="btn fw-semibold rounded-pill border-0 {{ $isGroupsPage ? 'btn-light' : '' }}"
+                  @if($isGroupsPage) disabled @endif
+                  @if(!$isGroupsPage) onclick="window.location.href='{{ route('groups.index') }}'" @endif
+          >Groups
+            {{-- TODO: What does this number mean? --}}
+            <span class="badge bg-primary ms-1 p-1">15</span>
+          </button>
+      </div>
+
+      @auth
+      <div class="p-1 rounded-pill bg-light border" style="background-color: rgba(0,0,0,0.05)">
+        <button type="button"
+                class="btn fw-semibold border-0"
+                onclick="window.location.href='{{ route('entities.edit', Auth::user()->entity) }}'">
+                 <i class="bi bi-person text-muted"></i>
+                My Profile</button>
+      </div>
+      @endauth
+  </div>
 
   <main class="py-4">
     @yield('content')
