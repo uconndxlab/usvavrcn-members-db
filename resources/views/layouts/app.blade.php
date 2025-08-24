@@ -98,7 +98,7 @@
       <div class="p-1 rounded-pill bg-light border" style="background-color: rgba(0,0,0,0.05)">
         <button type="button"
                 class="btn fw-semibold border-0"
-                onclick="window.location.href='{{ route('entities.edit', Auth::user()->entity) }}'">
+                onclick="window.location.href='{{ route('members.show', Auth::user()->entity) }}'">
                  <i class="bi bi-person text-muted"></i>
                 My Profile</button>
       </div>
