@@ -22,7 +22,7 @@
     </ul>
 
     {{-- Title heading --}}
-    <div class="container text-center mb-4">
+    <div class="container text-center mb-5">
         <h1 class="text-dark fw-normal">Welcome to the <strong>USAVRCN</strong> Member Database</h1>
         <div class="text-light bg-primary py-2 px-4 align-middle d-inline-block w-auto rounded-pill">
             <p class="p-0 m-0">Search, connect, and collaborate across the field of animal vaccinology.</p>
@@ -31,10 +31,10 @@
 
     {{-- Search/Selectors --}}
     @if($tagCategories && $tagCategories->isNotEmpty())
-        <div class="container mb-4">
+        <div class="container mb-2">
             <div class="row align-items-start fw-bold py-2 flex-column flex-md-row">
                 {{-- Tag categories - appears first on mobile, side by side on desktop --}}
-                <div class="col overflow-hidden rounded order-1 order-md-2 mb-3 mb-md-0" style="background-color: rgba(0,0,0,0.025);">
+                <div class="col overflow-hidden rounded order-1 order-md-2 mb-3 mb-md-0" style="background-color: rgba(0,0,0,0.05);">
                     <div class="d-flex align-items-start overflow-auto" style="white-space: nowrap;">
                         @foreach($tagCategories as $category)
                             @if($category->tags && $category->tags->isNotEmpty())
@@ -66,77 +66,43 @@
                         {{-- blank header text so that the input below will align with the other items on desktop --}}
                         &nbsp;
                     </small>
-                    <input wire:model.live.debounce.250ms="searchTerm" type="text" class="light-placeholder text-white form-control px-3 bg-dark rounded-pill" style="width: 180px;" placeholder="Search by name...">
+                    <div class="input-group" style="width: 200px;">
+                        <span class="input-group-text bg-dark border-0 rounded-start-pill text-white">
+                            <i class="bi bi-search"></i>
+                        </span>
+                        <input wire:model.live.debounce.250ms="searchTerm" type="text" class="light-placeholder text-white form-control bg-dark border-0 rounded-end-pill" placeholder="Search by name...">
+                    </div>
                 </div>
             </div>
         </div>
     @endif
 
-    <hr>
-
     <!-- Members Table -->
-    <div class="card bg-light rounded">
-        <div class="card-body bg-light text-dark rounded">
+    <div class="card rounded" style="background-color: rgba(0,0,0,0.05)">
+        <div class="card-body text-dark rounded pt-0 px-1">
             <div class="table-responsive">
                 <table class="table table-hover">
                     <thead>
                         <tr>
-                            <th class="bg-light text-dark">Name</th>
-                            <th class="bg-light text-dark">Company</th>
-                            <th class="bg-light text-dark">Email</th>
-                            <th class="bg-light text-dark">Tags</th>
-                            <th class="bg-light text-dark">Groups</th>
-                            <th class="bg-light text-dark">Actions</th>
+                            <th class="text-muted bg-transparent text-uppercase" style="font-size: 0.9em;">Name</th>
+                            <th class="text-muted bg-transparent text-uppercase" style="font-size: 0.9em;">Title</th>
+                            <th class="text-muted bg-transparent text-uppercase" style="font-size: 0.9em;">Company</th>
                         </tr>
                     </thead>
                     <tbody>
                         @forelse($members as $member)
-                        <tr>
-                            <td>
-                                <div class="d-flex align-items-center">
-                                    <div class="avatar-sm bg-primary rounded-circle d-flex align-items-center justify-content-center text-white me-2">
-                                        {{ substr($member->full_name, 0, 1) }}
-                                    </div>
-                                    <div>
-                                        <strong>{{ $member->full_name }}</strong>
-                                        @if($member->title)
-                                            <br><small class="text-muted">{{ $member->title }}</small>
-                                        @endif
-                                    </div>
-                                </div>
-                            </td>
-                            <td>{{ $member->company ?? '-' }}</td>
-                            <td>
-                                @if($member->email)
-                                    <a href="mailto:{{ $member->email }}">{{ $member->email }}</a>
+                        <tr
+                            style="cursor: pointer; @if($loop->first) border-top-left-radius: 0.5rem; border-top-right-radius: 0.5rem; @endif @if($loop->last) border-bottom-left-radius: 0.5rem; border-bottom-right-radius: 0.5rem; @endif"
+                            onclick="window.location.href='{{ route('members.show', $member) }}'">
+                            <td style="@if($loop->first) border-top-left-radius: 0.5rem; @endif @if($loop->last) border-bottom-left-radius: 0.5rem; @endif">
+                                @if (empty($member->full_name))
+                                    <strong class="fst-italic">{{ $member->email }}</strong>
                                 @else
-                                    -
+                                    <strong>{{ $member->full_name }}</strong>
                                 @endif
                             </td>
-                            <td>
-                                @if($member->tags)
-                                    @foreach($member->tags as $tag)
-                                        <span class="badge bg-secondary me-1">{{ $tag->name }}</span>
-                                    @endforeach
-                                @endif
-                            </td>
-                            <td>
-                                @if($member->memberOf && $member->memberOf->isNotEmpty())
-                                    {{ $member->memberOf->count() }} group(s)
-                                @else
-                                    -
-                                @endif
-                            </td>
-                            <td>
-                                <div class="btn-group btn-group-sm">
-                                    <a href="{{ route('members.show', $member) }}" class="btn btn-outline-primary">
-                                        <i class="bi bi-eye"></i>
-                                    </a>
-                                    <a href="{{ route('entities.edit', $member) }}" class="btn btn-outline-secondary">
-                                        <i class="bi bi-pencil"></i>
-                                    </a>
-                                </div>
-                            </td>
+                            <td>{{ !empty($member->job_title) ? $member->job_title : '-' }}</td>
+                            <td style="@if($loop->first) border-top-right-radius: 0.5rem; @endif @if($loop->last) border-bottom-right-radius: 0.5rem; @endif">{{ !empty($member->company) ? $member->company : '-' }}</td>
                         </tr>
                         @empty
                         <tr>
