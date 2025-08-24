@@ -11,7 +11,7 @@
     {{-- My groups bar --}}
     <div class="d-flex justify-content-between align-items-center mb-3">
         <h4 class="text-dark fw-bold">My Groups</h4>
-        <a href="#" class="btn btn-sm bg-dark text-white py-2 px-3 fw-semibold rounded-pill text-decoration-none">
+        <a href="{{ route('entities.edit', Auth::user()->entity) }}#groups-tags" class="btn btn-sm bg-dark text-white py-2 px-3 fw-semibold rounded-pill text-decoration-none">
             <i class="bi bi-pencil text-primary me-1"></i> Edit My Groups
         </a>
     </div>
