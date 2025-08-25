@@ -26,6 +26,10 @@ class AppServiceProvider extends ServiceProvider
     {
         Paginator::useBootstrapFive();
 
+        Gate::define('admin', function (User $user) {
+            return $user->is_admin;
+        });
+
         Gate::define('edit-member', function (User $user, Entity $member) {
             return $user->is_admin || $user->entity->id === $member->id;
         });

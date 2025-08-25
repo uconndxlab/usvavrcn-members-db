@@ -45,6 +45,9 @@
                                 <th class="text-muted bg-transparent text-uppercase" style="font-size: 0.9em;">Name</th>
                                 <th class="text-muted bg-transparent text-uppercase" style="font-size: 0.9em;">Title</th>
                                 <th class="text-muted bg-transparent text-uppercase" style="font-size: 0.9em;">Company</th>
+                                @can ('admin')
+                                    <th class="text-muted bg-transparent text-uppercase" style="font-size: 0.9em;"></th>
+                                @endcan
                             </tr>
                         </thead>
                         <tbody>
@@ -61,6 +64,19 @@
                                 </td>
                                 <td>{{ !empty($member->job_title) ? $member->job_title : '-' }}</td>
                                 <td style="@if($loop->first) border-top-right-radius: 0.5rem; @endif @if($loop->last) border-bottom-right-radius: 0.5rem; @endif">{{ !empty($member->company) ? $member->company : '-' }}</td>
+                                @can ('admin')
+                                    <td>
+                                        <form method="POST" action="{{ route('groups.removeMember', ['group' => $group, 'member' => $member]) }}" class="d-inline">
+                                            @csrf
+                                            <button type="submit" class="btn btn-sm btn-link text-danger px-2"
+                                                onclick="event.stopPropagation(); return confirm('Are you sure you want to remove this member from the group?');"
+                                                title="Remove Member"
+                                            >
+                                                <i class="bi bi-trash"></i>
+                                            </button>
+                                        </form>
+                                    </td>
+                                @endcan
                             </tr>
                             @empty
                             <tr>
@@ -68,9 +84,6 @@
                                     <div class="text-muted">
                                         <i class="bi bi-people fs-1"></i>
                                         <p class="mt-2">No members found</p>
-                                        @if(request('search') || request('tag'))
-                                            <a href="{{ route('members.index') }}" class="btn btn-sm btn-outline-primary">Clear filters</a>
-                                        @endif
                                     </div>
                                 </td>
                             </tr>

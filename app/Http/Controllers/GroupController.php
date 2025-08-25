@@ -84,4 +84,29 @@ class GroupController extends Controller
 
         return redirect()->route('groups.show', $group)->with('success', 'You have left the group successfully.');
     }
+
+    public function removeMember(Entity $group, Entity $member)
+    {
+        if ($group->entity_type !== 'group') {
+            abort(404);
+        }
+
+        $user = Auth::user();
+
+        if (!$user->entity) {
+            return redirect()->route('groups.show', $group)->with('error', 'Profile not found.');
+        }
+
+        if (!Auth::user()->is_admin) {
+            return redirect()->route('groups.show', $group)->with('error', 'You do not have permission to remove members.');
+        }
+
+        if (!$group->members()->where('entity_id', $member->id)->exists()) {
+            return redirect()->route('groups.show', $group)->with('info', 'The specified member is not part of this group.');
+        }
+
+        $group->members()->detach($member->id);
+
+        return redirect()->route('groups.show', $group)->with('success', 'Member has been removed from the group successfully.');
+    }
 }

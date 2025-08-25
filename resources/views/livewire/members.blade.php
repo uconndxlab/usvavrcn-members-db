@@ -97,6 +97,7 @@
                                 <div class="text-muted">
                                     <i class="bi bi-people fs-1"></i>
                                     <p class="mt-2">No members found</p>
+                                    {{-- TODO: i think this is old code? --}}
                                     @if(request('search') || request('tag'))
                                         <a href="{{ route('members.index') }}" class="btn btn-sm btn-outline-primary">Clear filters</a>
                                     @endif
