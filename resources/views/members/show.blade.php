@@ -1,7 +1,19 @@
 @extends('layouts.app')
 
 @section('content')
+
+
 <div class="container">
+    {{-- Members Breadcrumbs --}}
+    <nav aria-label="breadcrumb" class="mb-2">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="{{ route('members.index') }}">Members</a>
+            </li>
+            <li class="breadcrumb-item active" aria-current="page">{{ $member->name }}</li>
+        </ol>
+    </nav>
+
     <div class="row">
         <div class="col-lg-8">
             <div class="mb-4">
