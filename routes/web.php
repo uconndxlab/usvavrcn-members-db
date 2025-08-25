@@ -61,5 +61,8 @@ Route::middleware(['auth'])->group(function() {
     // Public posts
     Route::get('posts', [PostController::class, 'publicPosts'])->name('posts.public');
 
+});
+
+Route::middleware(['auth', 'can:admin'])->group(function() {
     Route::resource('tags', TagController::class)->except(['show']);
 });

@@ -54,6 +54,21 @@
                 </li>
               </ul>
             </li> --}}
+
+            {{-- admin pages --}}
+            @can('admin')
+              <li class="nav-item dropdown me-3">
+                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                  Admin Pages
+                </a>
+                <ul class="dropdown-menu">
+                  <li>
+                    <a class="dropdown-item" href="{{ route('tags.index') }}">Tags</a>
+                  </li>
+                </ul>
+              </li>
+            @endcan
+
             <li class="nav-item">
               <form method="POST" action="{{ route('logout') }}">
                 @csrf
