@@ -155,8 +155,7 @@
             </div>
 
             @if(isset($tagCategories) && $tagCategories->count() > 0)
-                {{-- this id 'groups-tags' is used from another page to scroll to this content  --}}
-                <h4 id="groups-tags" class="mb-3 mt-5">Groups & Tags</h4>
+                <h4 class="mb-3 mt-5">Groups & Tags</h4>
                 
                 @foreach($tagCategories as $category)
                     <div class="mb-4">
