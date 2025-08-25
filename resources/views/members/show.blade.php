@@ -7,10 +7,12 @@
             <div class="mb-4">
                 <div class="d-flex align-items-center justify-content-between mb-2">
                     <h1 class="fw-bolder mb-0 text-dark" style="font-size: 2.5rem;">{{ $member->full_name }}</h1>
-                    <a href="{{ route('entities.edit', $member) }}" class="btn btn-sm btn-primary rounded-pill px-3 text-decoration-none">
-                        <i class="bi bi-pencil"></i>
-                        <span>Edit</span>
-                    </a>
+                    @can ('edit-member', $member)
+                        <a href="{{ route('entities.edit', $member) }}" class="btn btn-sm btn-primary rounded-pill px-3 text-decoration-none">
+                            <i class="bi bi-pencil"></i>
+                            <span>Edit</span>
+                        </a>
+                    @endcan
                 </div>
                 @if (!empty($member->job_title))
                     <span class="badge bg-primary rounded-pill px-4 py-3" style="font-size:1rem">{{ $member->job_title }}</span>

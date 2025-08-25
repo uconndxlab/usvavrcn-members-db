@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Entity;
 use App\Models\TagCategory;
+use Illuminate\Support\Facades\Gate;
 
 class EntityController extends Controller
 {
@@ -106,6 +107,10 @@ class EntityController extends Controller
 
     public function edit(Entity $entity)
     {
+        if (!Gate::allows('edit-member', $entity)) {
+            abort(403);
+        }
+
         $tagCategories = TagCategory::active()->ordered()->with('activeTags')->get();
         $selectedTags = $entity->tags->pluck('id')->toArray();
         $allPeople = Entity::where('entity_type', 'person')
@@ -120,6 +125,10 @@ class EntityController extends Controller
 
     public function update(Request $request, Entity $entity)
     {
+        if (!Gate::allows('edit-member', $entity)) {
+            abort(403);
+        }
+
         $validated = $request->validate([
             'entity_type' => 'required|in:person,group',
             'name' => 'nullable|string|max:255',

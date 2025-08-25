@@ -2,8 +2,11 @@
 
 namespace App\Providers;
 
+use App\Models\User;
+use App\Models\Entity;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Facades\Gate;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -21,5 +24,9 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Paginator::useBootstrapFive();
+
+        Gate::define('edit-member', function (User $user, Entity $member) {
+            return $user->is_admin || $user->entity->id === $member->id;
+        });
     }
 }
