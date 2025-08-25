@@ -1,7 +1,22 @@
+<div>
+@if ($show)
+
 <div class="mb-4">
     <div class="card">
         <div class="card-body">
-            <h5 class="card-text border-0 text-dark">Post by {{ $post->author->name }}</h5>
+            <div class="d-flex justify-content-between">
+                <h5 class="card-text border-0 text-dark">Post by {{ $post->author->name }}</h5>
+                @can ('delete-post', $post)
+                    <button
+                        wire:click="deletePost"
+                        wire:confirm="Are you sure you want to delete this post?"
+                        class="btn btn-sm border-0 bg-transparent text-danger rounded-pill"
+                        title="Delete"
+                        style="padding: 0;">
+                        <i class="bi bi-trash"></i>
+                    </button>
+                @endcan
+            </div>
             <p class="card-text text-muted">{{ $post->content }}</p>
             <div class="d-flex justify-content-between align-items-center">
                 <div class="d-flex align-items-center gap-2">
@@ -50,4 +65,7 @@
     @endif
 
     
+</div>
+
+@endif
 </div>

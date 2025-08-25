@@ -5,6 +5,7 @@ namespace App\Livewire;
 use App\Models\Post;
 use App\Models\Entity;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use Livewire\Component;
 
 class PostCard extends Component
@@ -15,6 +16,7 @@ class PostCard extends Component
     public bool $commentsEnabled = false;
     public bool $isCommenting = false;
     public string $comment = '';
+    public bool $show = true;
 
     protected $rules = [
         'comment' => 'string|max:5000',
@@ -64,5 +66,19 @@ class PostCard extends Component
         ]);
 
         $this->stopCommenting();
+    }
+
+    public function deletePost()
+    {
+        if (!Gate::allows('delete-post', $this->post)) {
+            abort(403);
+        }
+
+        // delete out post and its children
+        $this->post->children()->delete();
+        $this->post->delete();
+        
+        // self destruct our component (lazy method) -- stops displaying our post
+        $this->show = false;
     }
 }
