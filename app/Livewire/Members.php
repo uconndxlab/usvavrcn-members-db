@@ -4,12 +4,13 @@ namespace App\Livewire;
 
 use App\Models\Entity;
 use App\Models\TagCategory;
-use Illuminate\Support\Facades\Log;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class Members extends Component
 {
-    public $members;
+    use WithPagination;
+    
     public $tagCategories;
 
     // 
@@ -18,11 +19,10 @@ class Members extends Component
     public $searchTerm = '';
 
     public function mount() {
-        $this->refreshQuery();
         $this->tagCategories = TagCategory::with('tags')->get();
     }
 
-    private function refreshQuery()
+    private function getQuery()
     {
         $query = Entity::where('entity_type', 'person');
         
@@ -45,7 +45,7 @@ class Members extends Component
             });
         }
 
-        $this->members = $query->with(['tags', 'tags.category'])->get();
+        return $query->with(['tags', 'tags.category']);
     }
 
     public function updatedSelection() {
@@ -58,25 +58,26 @@ class Members extends Component
             $this->selectedTagIds = [];
         }
 
-        $this->refreshQuery();
+        $this->resetPage();
     }
 
     public function updatedSearchTerm()
     {
-        $this->refreshQuery();
+        $this->resetPage();
     }
 
     public function removeTag($tagId)
     {
         unset($this->selectedTagIds[$tagId]);
-        $this->refreshQuery();
+        $this->resetPage();
     }
 
     public function render()
     {
+        $members = $this->getQuery()->paginate(15);
 
         return view('livewire.members', [
-            'members' => $this->members,
+            'members' => $members,
             'tagCategories' => $this->tagCategories,
         ]);
     }

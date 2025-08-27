@@ -125,13 +125,12 @@
                     </tbody>
                 </table>
             </div>
-            {{-- TODO: Figure out livewire pagination --}}
-            {{--             
+            
             @if($members->hasPages())
-                <div class="d-flex justify-content-center mt-3">
-                    {{ $members->links() }}
+                <div class="d-flex justify-content-center">
+                    {{ $members->links('pagination::bootstrap-5') }}
                 </div>
-            @endif --}}
+            @endif
         </div>
     </div>
 </div>
