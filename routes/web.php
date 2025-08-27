@@ -39,6 +39,7 @@ Route::middleware(['auth'])->group(function() {
     Route::get('members', [MemberController::class, 'index'])->name('members.index');
     Route::get('members/{member}', [MemberController::class, 'show'])->name('members.show');
     Route::post('members/{member}/toggle-admin', [MemberController::class, 'toggleAdmin'])->name('members.toggleAdmin');
+    Route::delete('members/{member}', [MemberController::class, 'deleteUserAccount'])->name('members.deleteUser');
 
     Route::get('groups', [GroupController::class, 'index'])->name('groups.index');
     Route::get('groups/{group}', [GroupController::class, 'show'])->name('groups.show');

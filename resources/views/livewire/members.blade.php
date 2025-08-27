@@ -74,6 +74,9 @@
                             <th class="text-muted bg-transparent text-uppercase" style="font-size: 0.9em;">Name</th>
                             <th class="text-muted bg-transparent text-uppercase" style="font-size: 0.9em;">Title</th>
                             <th class="text-muted bg-transparent text-uppercase" style="font-size: 0.9em;">Company</th>
+                            @can ('admin')
+                                <th class="text-muted bg-transparent text-uppercase" style="font-size: 0.9em;"></th>
+                            @endcan
                         </tr>
                     </thead>
                     <tbody>
@@ -90,6 +93,20 @@
                             </td>
                             <td>{{ !empty($member->job_title) ? $member->job_title : '-' }}</td>
                             <td style="@if($loop->first) border-top-right-radius: 0.5rem; @endif @if($loop->last) border-bottom-right-radius: 0.5rem; @endif">{{ !empty($member->company) ? $member->company : '-' }}</td>
+                            @can ('admin')
+                                <td>
+                                    <form method="POST" action="{{ route('members.deleteUser', ['member' => $member]) }}" class="d-inline" onclick="event.stopPropagation();">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-sm btn-link text-danger px-2"
+                                            onclick="return confirm('Are you sure you want to delete this user? This action cannot be undone.');"
+                                            title="Remove Member"
+                                        >
+                                            <i class="bi bi-trash"></i>
+                                        </button>
+                                    </form>
+                                </td>
+                            @endcan
                         </tr>
                         @empty
                         <tr>

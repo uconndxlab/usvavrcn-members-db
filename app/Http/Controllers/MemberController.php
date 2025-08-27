@@ -44,6 +44,24 @@ class MemberController extends Controller
         return redirect()->back()->with('status', $user->is_admin ? 'Admin access granted.' : 'Admin access revoked.');
     }
 
+    public function deleteUserAccount(Entity $member)
+    {
+        if (!Gate::allows('admin')) {
+            abort(403);
+        }
+
+        $user = User::where('entity_id', $member->id)->first();
+
+        if (!$user) {
+            return redirect()->route('members.show', $member)->with('error', 'This member does not have a user account!');
+        }
+
+        $user->delete();
+        $member->delete();
+
+        return redirect()->route('members.index')->with('status', 'User account deleted successfully.');
+    }
+
     public function afterRegistration()
     {
         return view('auth.after-registration');
