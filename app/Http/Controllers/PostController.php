@@ -62,7 +62,7 @@ class PostController extends Controller
             'end_time' => $validated['end_time']
         ]);
 
-        return redirect()->route('groups.posts', $group)
+        return redirect()->route('groups.index')
             ->with('success', 'Post created successfully!');
     }
 
