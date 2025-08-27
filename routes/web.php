@@ -33,6 +33,8 @@ Route::get('/', function() {
 });
 
 Route::middleware(['auth'])->group(function() {
+    Route::get('after-registration', [MemberController::class, 'afterRegistration'])->name('after-registration');
+
     // New Members and Groups routes
     Route::get('members', [MemberController::class, 'index'])->name('members.index');
     Route::get('members/{member}', [MemberController::class, 'show'])->name('members.show');

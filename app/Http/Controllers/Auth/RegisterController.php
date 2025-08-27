@@ -40,6 +40,6 @@ class RegisterController extends Controller
 
         Auth::login($user);
 
-        return redirect('/');
+        return redirect()->route('after-registration');
     }
 }

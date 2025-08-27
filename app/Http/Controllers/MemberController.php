@@ -43,4 +43,9 @@ class MemberController extends Controller
 
         return redirect()->back()->with('status', $user->is_admin ? 'Admin access granted.' : 'Admin access revoked.');
     }
+
+    public function afterRegistration()
+    {
+        return view('auth.after-registration');
+    }
 }
