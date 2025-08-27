@@ -6,12 +6,30 @@
         str_starts_with($group->name, 'Committee:') => '#cc41ef', // pink
         default => '#57be57', // green
     };
+    $user = Auth::user();
+    $inGroup = $user && $user->entity->groups->contains($group);
 @endphp
 <a href="{{ route('groups.show', $group) }}" class="text-decoration-none text-dark group-card-hover-anim">
     <div class="card h-100" style="border-left: 6px solid {{ $cardColor }};">
         <div class="card-body">
             <div class="mb-3">
-                <h5 class="card-title mb-1">{{ $group->name }}</h5>
+                <h5 class="card-title mb-1">
+                    {{-- if we're in the group, display # of unread messages in this group --}}
+                    @if ($inGroup)
+                    @php
+                        $unreadMessageCount = 0;
+                        $group->groupPosts->each(function ($post) use ($user, &$unreadMessageCount) {
+                            if (!$user->posts->contains($post->id)) {
+                                $unreadMessageCount++;
+                            }
+                        });
+                    @endphp
+                        @if ($unreadMessageCount > 0)
+                        <span class="badge bg-primary p-1">{{ $unreadMessageCount }}</span>
+                        @endif
+                    @endif
+                    {{ $group->name }}
+                </h5>
                 <small class="text-muted">
                     {{ $group->members ? $group->members->count() : 0 }} members
                 </small>

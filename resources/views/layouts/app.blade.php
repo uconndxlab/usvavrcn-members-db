@@ -104,8 +104,23 @@
                   @if($isGroupsPage) disabled @endif
                   @if(!$isGroupsPage) onclick="window.location.href='{{ route('groups.index') }}'" @endif
           >Groups
-            {{-- TODO: What does this number mean? --}}
-            <span class="badge bg-primary ms-1 p-1">15</span>
+              {{-- Find the number of posts that haven't been read yet --}}
+              @php
+                $user = Auth::user();
+                $count = 0;
+                if ($user) {
+                  $user->entity->groups->each(function ($group) use ($user, &$count) {
+                    $group->groupPosts->each(function ($post) use ($user, &$count) {
+                      if (!$user->posts->contains($post->id)) {
+                        $count++;
+                      }
+                    });
+                  });
+                }
+              @endphp
+              <span id="unread-posts-count" class="badge bg-primary ms-1 p-1" style="{{ $count > 0 ? '' : 'display:none;' }}">
+                {{ $count }}
+              </span>
           </button>
       </div>
 
@@ -125,5 +140,19 @@
   </main>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    // listen for when we need to update this value
+    document.addEventListener('unread-posts-updated', function (event) {
+      console.log("Updating unread posts count");
+      const count = event.detail.count;
+      const badge = document.getElementById('unread-posts-count');
+      if (count > 0) {
+        badge.textContent = count;
+        badge.style.display = 'inline';
+      } else {
+        badge.style.display = 'none';
+      }
+    });
+  </script>
 </body>
 </html>

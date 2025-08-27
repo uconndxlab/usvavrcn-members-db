@@ -52,4 +52,12 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Entity::class);
     }
+
+    /**
+     * Get the posts that the user has read.
+     */
+    public function posts()
+    {
+        return $this->belongsToMany(Post::class, 'post_reads')->withTimestamps();
+    }
 }

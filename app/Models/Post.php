@@ -61,4 +61,12 @@ class Post extends Model
     {
         return $this->hasMany(Post::class, 'parent_id');
     }
+
+    /**
+     * The users who have read this post
+     */
+    public function users()
+    {
+        return $this->belongsToMany(User::class, 'post_reads')->withTimestamps();
+    }
 }

@@ -113,3 +113,15 @@
     @endif
 
 </div>
+
+@script
+<script>
+    // tell the nav bar to update the unread posts count
+    $wire.on('unread-posts-updated', (e) => {
+        const { count } = e;
+        new CustomEvent('unread-posts-updated', {
+            detail: { count }
+        });
+    });
+</script>
+@endscript
