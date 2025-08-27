@@ -2,6 +2,9 @@
 
 @section('content')
 
+@php 
+    use App\Models\User;
+@endphp
 
 <div class="container">
     {{-- Members Breadcrumbs --}}
@@ -24,20 +27,21 @@
                     <h1 class="fw-bolder mb-0 text-dark" style="font-size: 2.5rem;">{{ $member->full_name }}</h1>
                     <div>
                         @can('admin')
-                            @php $hasAdmin = App\Models\User::where('entity_id', $member->id)->first()->is_admin @endphp
-                            <form action="{{ route('members.toggleAdmin', $member) }}" method="POST" class="d-inline">
-                                @csrf
-                                <button type="submit" class="btn btn-sm btn-danger rounded-pill px-3 text-decoration-none">
-                                    <i class="bi bi-lock"></i>
-                                    <span>
-                                        @if ($hasAdmin)
-                                            Revoke Admin
-                                        @else
-                                            Grant Admin
-                                        @endif
-                                    </span>
-                                </button>
-                            </form>
+                            @if (User::where('entity_id', $member->id)->exists())
+                                <form action="{{ route('members.toggleAdmin', $member) }}" method="POST" class="d-inline">
+                                    @csrf
+                                    <button type="submit" class="btn btn-sm btn-danger rounded-pill px-3 text-decoration-none">
+                                        <i class="bi bi-lock"></i>
+                                        <span>
+                                            @if (User::where('entity_id', $member->id)->first()->is_admin)
+                                                Revoke Admin
+                                            @else
+                                                Grant Admin
+                                            @endif
+                                        </span>
+                                    </button>
+                                </form>
+                            @endif
                         @endcan
                         @can('edit-member', $member)
                             <a href="{{ route('entities.edit', $member) }}" class="btn btn-sm btn-primary rounded-pill px-3 text-decoration-none">
