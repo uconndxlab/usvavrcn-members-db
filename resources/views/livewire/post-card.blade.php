@@ -71,7 +71,7 @@
                     @if (!$showcase && ($try_fix || $post->children->count() > 0))
                         <a href="{{ route('groups.posts.show', [$group, $post]) }}" class="btn text-white px-3 bg-dark btn-sm rounded-pill text-decoration-none">View</a>
                     @endif
-                    @if ($commentsEnabled)
+                    @if ($commentsEnabled && Auth::user()->entity->groups->contains($group))
                         <button wire:click="startCommenting" class="btn text-white px-3 bg-primary btn-sm rounded-pill">Comment</button>
                     @endif
                 </div>

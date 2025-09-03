@@ -54,6 +54,10 @@ class PostCard extends Component
 
     public function postComment()
     {
+        if (!Auth::user()->entity->groups->contains($this->group)) {
+            return;
+        }
+
         $this->comment = trim($this->comment);
         if (empty($this->comment)) {
             return;
