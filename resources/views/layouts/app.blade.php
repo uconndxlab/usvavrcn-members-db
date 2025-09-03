@@ -96,13 +96,13 @@
       <div class="btn-group btn-group p-1 rounded-pill" style="background-color: rgba(0,0,0,0.05)" role="group">
           <button type="button"
                   class="btn fw-semibold rounded-pill border-0 {{ !$isGroupsPage ? 'btn-light' : '' }}"
-                  @if(!$isGroupsPage) disabled @endif
-                  @if(!!$isGroupsPage) onclick="window.location.href='{{ route('members.index') }}'" @endif
+                  @if(!$isGroupsPage) style="pointer-events: none; user-select: none;" @endif
+                  @if($isGroupsPage) onclick="window.location.href='{{ route('members.index') }}'" style="color: #40454a;" @endif
           >Member Database</button>
           <button type="button"
                   class="btn fw-semibold rounded-pill border-0 {{ $isGroupsPage ? 'btn-light' : '' }}"
-                  @if($isGroupsPage) disabled @endif
-                  @if(!$isGroupsPage) onclick="window.location.href='{{ route('groups.index') }}'" @endif
+                  @if($isGroupsPage) style="pointer-events: none; user-select: none;" @endif
+                  @if(!$isGroupsPage) onclick="window.location.href='{{ route('groups.index') }}'" style="color: #40454a;" @endif
           >Groups
               {{-- Find the number of posts that haven't been read yet --}}
               @php
