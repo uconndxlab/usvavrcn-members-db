@@ -17,14 +17,17 @@
                     </button>
                 @endcan
             </div>
-            <p class="card-text text-muted">{{ $post->content }}</p>
+            <p class="card-text">{{ $post->content }}</p>
             <div class="d-flex justify-content-between align-items-center">
                 <div class="d-flex align-items-center gap-2">
                     <small class="text-muted me-2">{{ $post->created_at->diffForHumans() }}</small>
                     @if ($post->parent_id == null)
                         <small class="text-muted me-2"><i class="bi bi-chat"></i> {{ $post->children->count() }}</small>
                     @endif
-                    <small class="text-muted">Created by {{ $post->author->name }}</small>
+                    <small class="text-muted">Created by 
+                        <a href="{{ route('members.show', $post->author->id) }}" class="fst-italic text-muted text-decoration-underline">{{ $post->author->name }}
+                        </a>
+                    </small>
                 </div>
                 <div>
                     {{-- @TODO: view post when clicking on it.. this page doesn't exist yet. --}}
