@@ -11,6 +11,11 @@ class EntityController extends Controller
 {
     public function index(Request $request)
     {
+
+        // redirect to /members
+        return redirect()->route('members.index');
+
+
         $query = Entity::query();
 
         if ($request->filled('search')) {

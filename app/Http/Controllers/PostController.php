@@ -14,6 +14,10 @@ class PostController extends Controller
      */
     public function index(Request $request, Entity $group)
     {
+
+        // Redirect to new version of this page
+        return redirect()->route('groups.show', $group);
+
         // Ensure this is actually a group
         if ($group->entity_type !== 'group') {
             abort(404);
