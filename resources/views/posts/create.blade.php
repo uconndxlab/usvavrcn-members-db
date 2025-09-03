@@ -20,23 +20,6 @@
                 <div class="card-body">
                     <form action="{{ route('groups.posts.store', $group) }}" method="POST">
                         @csrf
-                        
-                        <div class="mb-3">
-                            <label for="author_id" class="form-label">Post as</label>
-                            <select name="author_id" id="author_id" class="form-select @error('author_id') is-invalid @enderror" required>
-                                <option value="">Select author...</option>
-                                @foreach ($group->members as $member)
-                                    <option value="{{ $member->id }}" @selected(old('author_id') == $member->id)>
-                                        {{ $member->name }}
-                                    </option>
-                                @endforeach
-                            </select>
-                            @error('author_id')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
-                            <small class="text-muted">Only group members can post.</small>
-                        </div>
-
                         <div class="mb-3">
                             <label for="content" class="form-label">Content</label>
                             <textarea name="content" id="content" rows="6" 

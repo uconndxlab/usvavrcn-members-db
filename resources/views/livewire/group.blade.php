@@ -23,13 +23,13 @@
     <div class="d-flex align-items-center my-3">
         <div class="btn-group btn-group-sm border p-1 rounded-pill" style="background-color: rgba(0,0,0,0.05)" role="group" aria-label="Filter by group type">
             <button type="button"
-                    class="btn @if($selectedTab == 'members') btn-light @endif fw-semibold rounded-pill"
-                    wire:click="$set('selectedTab', 'members')"
-            >Members</button>
-            <button type="button"
                     class="btn @if($selectedTab == 'forum') btn-light @endif fw-semibold rounded-pill"
                     wire:click="$set('selectedTab', 'forum')"
             >Forum</button>
+            <button type="button"
+                    class="btn @if($selectedTab == 'members') btn-light @endif fw-semibold rounded-pill"
+                    wire:click="$set('selectedTab', 'members')"
+            >Members</button>
         </div>
     </div>
     

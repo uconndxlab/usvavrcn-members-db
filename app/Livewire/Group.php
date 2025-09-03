@@ -4,14 +4,13 @@ namespace App\Livewire;
 
 use App\Models\Entity;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Log;
 use Livewire\Component;
 
 class Group extends Component
 {
 
     public $group;
-    public $selectedTab = "members"; // members|forum
+    public $selectedTab = "forum"; // members|forum
 
     public function mount(Entity $group) {
         $this->group = $group;

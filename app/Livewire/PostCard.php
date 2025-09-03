@@ -58,6 +58,8 @@ class PostCard extends Component
             return;
         }
 
+        $this->validate();
+
         Post::create([
             'entity_id' => Auth::user()->entity->id,
             'target_group_id' => $this->group->id,

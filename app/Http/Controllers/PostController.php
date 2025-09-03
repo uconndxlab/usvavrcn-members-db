@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Entity;
 use App\Models\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
 {
@@ -47,22 +48,27 @@ class PostController extends Controller
             abort(404);
         }
 
+        $user = Auth::user();
+
+        if (!$user->entity) {
+            return redirect()->back()->withErrors('You must have an entity to create posts.');
+        }
+
         $validated = $request->validate([
             'content' => 'required|string|max:5000',
             'start_time' => 'nullable|date',
             'end_time' => 'nullable|date|after:start_time',
-            'author_id' => 'required|exists:entities,id'
         ]);
 
         Post::create([
-            'entity_id' => $validated['author_id'],
+            'entity_id' => $user->entity->id,
             'target_group_id' => $group->id,
             'content' => $validated['content'],
             'start_time' => $validated['start_time'],
             'end_time' => $validated['end_time']
         ]);
 
-        return redirect()->route('groups.index')
+        return redirect()->route('groups.show', $group)
             ->with('success', 'Post created successfully!');
     }
 
