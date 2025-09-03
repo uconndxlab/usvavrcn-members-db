@@ -14,6 +14,9 @@ class Group extends Component
 
     public function mount(Entity $group) {
         $this->group = $group;
+
+        // our default view selection
+        $this->updatedSelectedTab('forum');
     }
 
     public function updatedSelectedTab($tab)

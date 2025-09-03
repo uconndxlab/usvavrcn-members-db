@@ -20,6 +20,24 @@
                 <div class="card-body">
                     <form action="{{ route('groups.posts.store', $group) }}" method="POST">
                         @csrf
+
+                        <div class="mb-3">
+                            <label for="title" class="form-label">Title</label>
+                            <input
+                                type="text"
+                                name="title"
+                                id="title"
+                                class="form-control @error('title') is-invalid @enderror"
+                                value="{{ old('title') }}"
+                                placeholder="Enter post title"
+                                maxlength="60"
+                                required
+                            >
+                            @error('title')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+
                         <div class="mb-3">
                             <label for="content" class="form-label">Content</label>
                             <textarea name="content" id="content" rows="6" 

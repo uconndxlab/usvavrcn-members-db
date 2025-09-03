@@ -12,6 +12,7 @@ class Post extends Model
         'entity_id',
         'target_group_id', 
         'content',
+        'title',
         'start_time',
         'end_time',
         'parent_id'

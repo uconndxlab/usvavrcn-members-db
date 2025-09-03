@@ -10,22 +10,23 @@ use Livewire\Component;
 
 class PostCard extends Component
 {
-
     public Post $post;
     public Entity $group;
     public bool $commentsEnabled = false;
     public bool $isCommenting = false;
     public string $comment = '';
-    public bool $show = true;
+    public bool $showcase = false;
+    public bool $is_deleted = false;
 
     protected $rules = [
         'comment' => 'string|max:5000',
     ];
     
-    public function mount(Post $post, Entity $group)
+    public function mount(Post $post, Entity $group, bool $showcase = false)
     {
         $this->post = $post;
         $this->group = $group;
+        $this->showcase = $showcase;
 
         if ($this->post->parent_id == null) {
             $this->commentsEnabled = true;
@@ -68,6 +69,7 @@ class PostCard extends Component
         ]);
 
         $this->stopCommenting();
+        $this->updateRecentPosts();
     }
 
     public function deletePost()
@@ -81,6 +83,16 @@ class PostCard extends Component
         $this->post->delete();
         
         // self destruct our component (lazy method) -- stops displaying our post
-        $this->show = false;
+        $this->is_deleted = true;
+
+        $this->updateRecentPosts();
+    }
+
+    /**
+     * Update the count for recent posts (total posts)
+     */
+    private function updateRecentPosts()
+    {
+        $this->dispatch('recent-posts-updated', count: $this->group->groupPosts->count());
     }
 }

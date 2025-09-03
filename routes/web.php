@@ -60,6 +60,7 @@ Route::middleware(['auth'])->group(function() {
     Route::get('groups/{group}/posts', [PostController::class, 'index'])->name('groups.posts');
     Route::get('groups/{group}/posts/create', [PostController::class, 'create'])->name('groups.posts.create');
     Route::post('groups/{group}/posts', [PostController::class, 'store'])->name('groups.posts.store');
+    Route::get('groups/{group}/posts/{post}', [PostController::class, 'show'])->name('groups.posts.show');
 
     // Public posts
     Route::get('posts', [PostController::class, 'publicPosts'])->name('posts.public');

@@ -28,6 +28,19 @@ class PostController extends Controller
     }
 
     /**
+     * Display specific post in a group
+     */
+    public function show(Entity $group, Post $post)
+    {
+        // Ensure this is actually a group
+        if ($group->entity_type !== 'group') {
+            abort(404);
+        }
+
+        return view('posts.show', compact('group', 'post'));
+    }
+
+    /**
      * Show form to create a new post in a group
      */
     public function create(Entity $group)
@@ -56,6 +69,7 @@ class PostController extends Controller
 
         $validated = $request->validate([
             'content' => 'required|string|max:5000',
+            'title' => 'required|string|max:60',
             'start_time' => 'nullable|date',
             'end_time' => 'nullable|date|after:start_time',
         ]);
@@ -64,8 +78,9 @@ class PostController extends Controller
             'entity_id' => $user->entity->id,
             'target_group_id' => $group->id,
             'content' => $validated['content'],
+            'title' => $validated['title'],
             'start_time' => $validated['start_time'],
-            'end_time' => $validated['end_time']
+            'end_time' => $validated['end_time'],
         ]);
 
         return redirect()->route('groups.show', $group)

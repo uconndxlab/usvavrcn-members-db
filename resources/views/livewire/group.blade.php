@@ -98,7 +98,7 @@
     {{-- Forum view --}}
     @if ($selectedTab == 'forum')
         <div class="mt-4 mb-3 d-flex justify-content-between align-items-center">
-            <p class="fw-bolder h4 mb-0">Recent Posts ({{ $group->groupPosts->count() }})</p>
+            <p id="recent-posts-count" class="fw-bolder h4 mb-0">Recent Posts ({{ $group->groupPosts->count() }})</p>
             <div class="text-center">
                 <a href="{{ route('groups.posts.create', ['group' => $group]) }}" class="btn btn-dark btn-sm px-4 py-2 text-decoration-none rounded-pill">Make Post</a>
             </div>
@@ -122,6 +122,11 @@
         new CustomEvent('unread-posts-updated', {
             detail: { count }
         });
+    });
+
+    $wire.on('recent-posts-updated', (e) => {
+        const { count } = e;
+        document.getElementById('recent-posts-count').innerText = `Recent Posts (${count})`;
     });
 </script>
 @endscript
