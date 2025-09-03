@@ -104,11 +104,22 @@
             </div>
         </div>
         <div class="row">
-            @foreach($group->groupPosts->where('parent_id', null)->sortByDesc('created_at') as $post)
+            @php
+                $posts = $group->groupPosts()
+                    ->whereNull('parent_id')
+                    ->orderByDesc('created_at')
+                    ->paginate(10);
+            @endphp
+
+            @foreach($posts as $post)
                 <div class="col-md-12">
                     <livewire:post-card :$post :group="$group" :key="$post->id" />
                 </div>
             @endforeach
+
+            <div class="mt-3">
+                {{ $posts->links() }}
+            </div>
         </div>
     @endif
 
