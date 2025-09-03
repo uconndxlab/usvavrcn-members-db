@@ -45,12 +45,22 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'last_login' => 'datetime',
         ];
     }
 
     public function entity()
     {
         return $this->belongsTo(Entity::class);
+    }
+
+    /**
+     * Update the last login date for the user.
+     */
+    public function updateLastLogin()
+    {
+        $this->last_login = now();
+        $this->save();
     }
 
     /**

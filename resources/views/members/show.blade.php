@@ -54,6 +54,14 @@
                 @if (!empty($member->job_title))
                     <span class="badge bg-primary rounded-pill px-4 py-3" style="font-size:1rem">{{ $member->job_title }}</span>
                 @endif
+                @can('admin')
+                    @php
+                        $user = User::where('entity_id', $member->id)->first();
+                    @endphp
+                    @if ($user)
+                        <div class="text-muted mt-3">Last login: {{ $user->last_login ? $user->last_login->diffForHumans() : 'Never' }}</div>
+                    @endif
+                @endcan
             </div>
 
             <div class="mb-4">
