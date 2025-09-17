@@ -5,12 +5,9 @@ namespace App\Livewire;
 use App\Models\Entity;
 use App\Models\TagCategory;
 use Livewire\Component;
-use Livewire\WithPagination;
 
 class Members extends Component
 {
-    use WithPagination;
-    
     public $tagCategories;
 
     // 
@@ -45,7 +42,7 @@ class Members extends Component
             });
         }
 
-        return $query->with(['tags', 'tags.category']);
+        return $query->with(['tags', 'tags.category'])->get();
     }
 
     public function updatedSelection() {
@@ -74,7 +71,9 @@ class Members extends Component
 
     public function render()
     {
-        $members = $this->getQuery()->paginate(15);
+        $members = $this->getQuery()->sortBy(function($member) {
+            return !empty($member->name) ? $member->name : $member->email;
+        });
 
         return view('livewire.members', [
             'members' => $members,
