@@ -8,6 +8,8 @@ use Livewire\Component;
 
 class Members extends Component
 {
+    use \Livewire\WithPagination;
+
     public $tagCategories;
 
     // 
