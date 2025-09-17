@@ -22,34 +22,31 @@
     @if ($hasNewPosts)
         <div class="my-3">
             <h4 class="text-dark fw-bold mb-2 d-block d-md-inline me-md-3">Recent Posts</h4>
-            <div>
-                @foreach ($groups as $group)
-                    @php
-                        $unreadMessages = $group->groupPosts
-                            ->whereNotIn('id', Auth::user()->posts->pluck('id'));
-                    @endphp
+        </div>
 
-                    @if ($unreadMessages->count() && Auth::user() && Auth::user()->entity->groups->contains($group))
-                        {{-- display card with the message content --}}
-                        <div class="d-flex overflow-auto mb-3 pb-2" style="gap: 1rem;">
-                            @foreach ($unreadMessages as $post)
-                                <div class="card flex-shrink-0" style="width: 360px; height: 200px;">
-                                    <div class="card-body d-flex flex-column h-100">
-                                        <h5 class="card-title">{{ $post->title }}</h5>
-                                        <p class="card-text mb-0 flex-grow-1">{{ Str::limit($post->content, 120) }}</p>
-                                        <p class="card-text mt-auto mb-0">
-                                            <small class="text-muted d-flex justify-content-between">
-                                                {{ $post->created_at->format('M d, Y') }}
-                                                <a href="{{ route('groups.show', $group->id) }}"> In {{ $group->name }}</a>
-                                            </small>
-                                        </p>
-                                    </div>
-                                </div>
-                            @endforeach
+        <div class="mb-3">
+            @foreach ($groups as $group)
+                @php
+                    $unreadMessages = $group->groupPosts
+                        ->whereNotIn('id', Auth::user()->posts->pluck('id'));
+                @endphp
+                @if ($unreadMessages->count() && Auth::user() && Auth::user()->entity->groups->contains($group))
+                    @foreach ($unreadMessages as $post)
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ $post->title }}</h5>
+                                <p class="card-text">{{ Str::limit($post->content, 300) }}</p>
+                                <p class="card-text mb-0">
+                                    <small class="text-muted">
+                                        <span class="me-2">{{ $post->created_at->format('M d, Y') }}</span>
+                                        <a href="{{ route('groups.show', $group->id) }}" class="text-decoration-none">In {{ $group->name }}</a>
+                                    </small>
+                                </p>
+                            </div>
                         </div>
-                    @endif
-                @endforeach
-            </div>
+                    @endforeach
+                @endif
+            @endforeach
         </div>
     @endif
 
