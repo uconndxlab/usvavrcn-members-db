@@ -5,7 +5,7 @@
     <h1>Edit Tag</h1>
     <form method="POST" action="{{ route('tags.update', $tag) }}">
         @csrf @method('PUT')
-        @include('tags.partials.form')
+        @include('admin.tags.partials.form')
         <button class="btn btn-primary">Save</button>
     </form>
 </div>

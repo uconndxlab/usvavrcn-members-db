@@ -9,6 +9,7 @@ use App\Http\Controllers\Auth\PasswordController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\GroupController;
+use App\Http\Controllers\ManageGroupController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Password;
 
@@ -68,5 +69,6 @@ Route::middleware(['auth'])->group(function() {
 });
 
 Route::middleware(['auth', 'can:admin'])->group(function() {
-    Route::resource('tags', TagController::class)->except(['show']);
+    Route::resource('admin/tags', TagController::class)->except(['show']);
+    Route::resource('admin/groups', ManageGroupController::class)->except(['show']);
 });

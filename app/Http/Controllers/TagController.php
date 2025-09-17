@@ -11,12 +11,12 @@ class TagController extends Controller
     public function index()
     {
         $tags = Tag::orderBy('name')->get();
-        return view('tags.index', compact('tags'));
+        return view('admin.tags.index', compact('tags'));
     }
 
     public function create()
     {
-        return view('tags.create');
+        return view('admin.tags.create');
     }
 
     public function store(Request $request)
@@ -32,7 +32,7 @@ class TagController extends Controller
 
     public function edit(Tag $tag)
     {
-        return view('tags.edit', compact('tag'));
+        return view('admin.tags.edit', compact('tag'));
     }
 
     public function update(Request $request, Tag $tag)
