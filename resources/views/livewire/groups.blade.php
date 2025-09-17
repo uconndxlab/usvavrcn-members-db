@@ -8,6 +8,10 @@
         </div>
     </div>
 
+    <div class="my-3">
+        <h4 class="text-dark fw-bold mb-2 d-block d-md-inline me-md-3">My Groups</h4>
+    </div>
+
     {{-- List of my groups --}}
     @if (Auth::user() && !Auth::user()->entity->groups->isEmpty())
 
