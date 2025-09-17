@@ -37,7 +37,7 @@ class ManageGroupController extends Controller
             'entity_type' => 'group'
         ]);
 
-        return redirect()->route('groups.index')->with('success', 'Group created!');
+        return redirect()->route('admin.groups.index')->with('success', 'Group created!');
 
     }
 
@@ -59,13 +59,13 @@ class ManageGroupController extends Controller
 
         $group->update(['name' => $request->name]);
 
-        return redirect()->route('groups.index')->with('success', 'Group updated!');
+        return redirect()->route('admin.groups.index')->with('success', 'Group updated!');
 
     }
 
     public function destroy(Entity $group)
     {
         $group->delete();
-        return redirect()->route('groups.index')->with('success', 'Group deleted!');
+        return redirect()->route('admin.groups.index')->with('success', 'Group deleted!');
     }
 }

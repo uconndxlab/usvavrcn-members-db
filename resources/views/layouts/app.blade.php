@@ -66,7 +66,7 @@
                     <a class="dropdown-item" href="{{ route('tags.index') }}">Manage Tags</a>
                   </li>
                   <li>
-                    <a class="dropdown-item" href="{{ route('groups.index') }}">Manage Groups</a>
+                    <a class="dropdown-item" href="{{ route('admin.groups.index') }}">Manage Groups</a>
                   </li>
                 </ul>
               </li>

@@ -8,15 +8,15 @@
         <div class="alert alert-success">{{ session('success') }}</div>
     @endif
 
-    <a href="{{ route('groups.create') }}" class="btn btn-primary mb-3">Add Group</a>
+    <a href="{{ route('admin.groups.create') }}" class="btn btn-primary mb-3">Add Group</a>
 
     <ul class="list-group">
         @foreach ($groups as $group)
             <li class="list-group-item d-flex justify-content-between align-items-center">
                 {{ $group->name }}
                 <div>
-                    <a href="{{ route('groups.edit', $group) }}" class="btn btn-sm btn-warning">Edit</a>
-                    <form action="{{ route('groups.destroy', $group) }}" method="POST" class="d-inline" onsubmit="return confirm('Delete this tag?')">
+                    <a href="{{ route('admin.groups.edit', $group) }}" class="btn btn-sm btn-warning">Edit</a>
+                    <form action="{{ route('admin.groups.destroy', $group) }}" method="POST" class="d-inline" onsubmit="return confirm('Delete this tag?')">
                         @csrf @method('DELETE')
                         <button class="btn btn-sm btn-danger">Delete</button>
                     </form>

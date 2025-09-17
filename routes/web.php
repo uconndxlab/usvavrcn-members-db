@@ -70,5 +70,13 @@ Route::middleware(['auth'])->group(function() {
 
 Route::middleware(['auth', 'can:admin'])->group(function() {
     Route::resource('admin/tags', TagController::class)->except(['show']);
-    Route::resource('admin/groups', ManageGroupController::class)->except(['show']);
+    Route::resource('admin/groups', ManageGroupController::class)->except(['show'])->names([
+        // prevent conflictions with /groups routes 
+        'index' => 'admin.groups.index',
+        'create' => 'admin.groups.create',
+        'store' => 'admin.groups.store',
+        'edit' => 'admin.groups.edit',
+        'update' => 'admin.groups.update',
+        'destroy' => 'admin.groups.destroy',
+    ]);
 });
