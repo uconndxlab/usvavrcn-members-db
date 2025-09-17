@@ -122,7 +122,7 @@
                     <h5 class="fw-bold text-dark mb-3 border-0">Communication Groups</h5>
                     @foreach($member->groups as $group)
                         <div class="mb-2 text-muted">
-                            Team: <a href="{{ route('groups.show', $group) }}" class="text-decoration-none text-muted">{{ $group->name }}</a>
+                            <a href="{{ route('groups.show', $group) }}" class="text-decoration-none text-muted">{{ $group->name }}</a>
                         </div>
                     @endforeach
                 </div>
