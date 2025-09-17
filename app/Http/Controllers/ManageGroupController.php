@@ -27,6 +27,11 @@ class ManageGroupController extends Controller
             'name' => 'required|unique:entities,name|max:255',
         ]);
 
+        // Validate the name starts with Team:, Focus:, or Committee:
+        if (!preg_match('/^(Team:|Focus:|Committee:)/', $request->name)) {
+            return back()->withErrors(['name' => 'Group name must start with Team:, Focus:, or Committee:'])->withInput();
+        }
+
         Entity::create([
             'name' => $request->name,
             'entity_type' => 'group'
@@ -46,6 +51,11 @@ class ManageGroupController extends Controller
         $request->validate([
             'name' => 'required|max:255|unique:entities,name,' . $group->id,
         ]);
+
+        // Validate the name starts with Team:, Focus:, or Committee:
+        if (!preg_match('/^(Team:|Focus:|Committee:)/', $request->name)) {
+            return back()->withErrors(['name' => 'Group name must start with Team:, Focus:, or Committee:'])->withInput();
+        }
 
         $group->update(['name' => $request->name]);
 
