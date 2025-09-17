@@ -59,7 +59,7 @@
 
         <div class="row">
             @foreach (Auth::user()->entity->groups as $group)
-                <div class="col-md-6 col-lg-4 mb-4">
+                <div class="col-12 mb-4">
                     @include('groups.partials.group-card', ['group' => $group])
                 </div>
             @endforeach
@@ -102,7 +102,7 @@
     <!-- Groups Cards -->
     <div class="row">
         @forelse($groups as $group)
-            <div class="col-md-6 col-lg-4 mb-4">
+            <div class="col-12 mb-4">
                 @include('groups.partials.group-card', ['group' => $group])
             </div>
         @empty

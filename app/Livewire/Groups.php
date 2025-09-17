@@ -55,6 +55,7 @@ class Groups extends Component
 
     public function render()
     {
+        $this->groups = $this->groups->sortBy('name')->values();
         return view('livewire.groups', [
             'groups' => $this->groups,
             'tagCategories' => $this->tagCategories,
