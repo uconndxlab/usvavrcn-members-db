@@ -17,12 +17,9 @@
                     {{-- if we're in the group, display # of unread messages in this group --}}
                     @if ($inGroup)
                     @php
-                        $unreadMessageCount = 0;
-                        $group->groupPosts->each(function ($post) use ($user, &$unreadMessageCount) {
-                            if (!$user->posts->contains($post->id)) {
-                                $unreadMessageCount++;
-                            }
-                        });
+                        $unreadMessageCount = $group->groupPosts
+                            ->whereNotIn('id', $user->posts->pluck('id'))
+                            ->count();
                     @endphp
                         @if ($unreadMessageCount > 0)
                         <span class="badge bg-primary p-1">{{ $unreadMessageCount }}</span>
