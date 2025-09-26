@@ -143,7 +143,7 @@
             </div>
 
             <h4 class="mb-3 mt-5">Research</h4>
-            <div class="row g-3">
+            <div class="row g-3 mb-4">
                 <div class="col-12">
                     <label class="small ps-2 pb-0 text-muted text-start w-100 text-uppercase text-nowrap" style="font-size: 0.7em;">Research Interests</label>
                     <textarea name="research_interests" placeholder="Research Interests" rows="3" class="form-control">{{ old('research_interests', $entity->research_interests ?? '') }}</textarea>
@@ -153,6 +153,35 @@
                     <textarea name="projects" placeholder="Projects" rows="3" class="form-control">{{ old('projects', $entity->projects ?? '') }}</textarea>
                 </div>
             </div>
+
+            @php
+                $groups = App\Models\Entity::where('entity_type', 'group')->get();
+                $groups = $groups->sortBy(function($group) use ($entity) {
+                    return $entity->groups->contains($group) ? 0 : 1;
+                });
+            @endphp
+
+            @if (isset($entity) && $entity->entity_type !== 'group')
+                <h4>My Groups</h4>
+                <p class="text-muted small mb-2">Select the groups you would like to join</p>
+                <div class="mb-4">
+                    @if(isset($groups))
+                        @foreach ($groups as $group)
+                            <div class="col-md-12 mb-2">
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input" type="checkbox"
+                                    name="groups[]"
+                                    id="group_{{ $group->id }}" value="{{ $group->id }}"
+                                    @checked(in_array($group->id, old('groups', $selectedGroups ?? [])))>
+                                    <label class="form-check-label" for="group_{{ $group->id }}">
+                                        {{ $group->name }}
+                                    </label>
+                                </div>
+                            </div>
+                        @endforeach
+                    @endif
+                </div>
+            @endif
 
             @if(isset($tagCategories) && $tagCategories->count() > 0)
                 <h4 class="mb-3 mt-5">Groups & Tags</h4>
