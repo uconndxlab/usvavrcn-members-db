@@ -23,9 +23,10 @@ class TagController extends Controller
     {
         $request->validate([
             'name' => 'required|unique:tags,name|max:255',
+            'category_id' => 'required|exists:tag_categories,id',
         ]);
 
-        Tag::create(['name' => $request->name]);
+        Tag::create(['name' => $request->name, 'tag_category_id' => $request->category_id]);
 
         return redirect()->route('tags.index')->with('success', 'Tag created!');
     }
@@ -39,9 +40,10 @@ class TagController extends Controller
     {
         $request->validate([
             'name' => 'required|max:255|unique:tags,name,' . $tag->id,
+            'category_id' => 'required|exists:tag_categories,id',
         ]);
 
-        $tag->update(['name' => $request->name]);
+        $tag->update(['name' => $request->name, 'tag_category_id' => $request->category_id]);
 
         return redirect()->route('tags.index')->with('success', 'Tag updated!');
     }

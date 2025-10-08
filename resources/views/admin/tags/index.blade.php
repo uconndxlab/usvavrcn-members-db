@@ -11,9 +11,19 @@
     <a href="{{ route('tags.create') }}" class="btn btn-primary mb-3">Add Tag</a>
 
     <ul class="list-group">
+        @php
+            $tags = $tags->sortBy(function($tag) {
+                return $tag->category ? $tag->category->name . ' - ' . $tag->name : $tag->name;
+            });
+        @endphp
         @foreach ($tags as $tag)
             <li class="list-group-item d-flex justify-content-between align-items-center">
-                {{ $tag->name }}
+                <div>
+                    @if($tag->category)
+                        <span class="badge bg-secondary">{{ $tag->category->name }}</span>
+                    @endif
+                    {{ $tag->name }}
+                    </div>
                 <div>
                     <a href="{{ route('tags.edit', $tag) }}" class="btn btn-sm btn-warning">Edit</a>
                     <form action="{{ route('tags.destroy', $tag) }}" method="POST" class="d-inline" onsubmit="return confirm('Delete this tag?')">

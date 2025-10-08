@@ -4,4 +4,17 @@
     @error('name')
         <div class="text-danger">{{ $message }}</div>
     @enderror
+
+    <label for="category_id" class="form-label mt-3">Category</label>
+    <select name="category_id" class="form-select">
+        <option value="">Select Category</option>
+        @foreach (App\Models\TagCategory::all() as $category)
+            <option value="{{ $category->id }}" @if(old('category_id', $tag->category->id ?? '') == $category->id) selected @endif>
+                {{ $category->name }}
+            </option>
+        @endforeach
+    </select>
+    @error('category_id')
+        <div class="text-danger">{{ $message }}</div>
+    @enderror
 </div>
