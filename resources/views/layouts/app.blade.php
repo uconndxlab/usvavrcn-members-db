@@ -63,6 +63,9 @@
                 </a>
                 <ul class="dropdown-menu">
                   <li>
+                    <a class="dropdown-item" href="{{ route('admin.users.index') }}">Manage Users</a>
+                  </li>
+                  <li>
                     <a class="dropdown-item" href="{{ route('tags.index') }}">Manage Tags</a>
                   </li>
                   <li>

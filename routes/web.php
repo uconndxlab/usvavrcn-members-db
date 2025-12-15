@@ -10,6 +10,7 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\GroupController;
 use App\Http\Controllers\ManageGroupController;
+use App\Http\Controllers\ManageUserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Password;
 
@@ -78,5 +79,11 @@ Route::middleware(['auth', 'can:admin'])->group(function() {
         'edit' => 'admin.groups.edit',
         'update' => 'admin.groups.update',
         'destroy' => 'admin.groups.destroy',
+    ]);
+    Route::resource('admin/users', ManageUserController::class)->except(['show', 'create', 'store'])->names([
+        'index' => 'admin.users.index',
+        'edit' => 'admin.users.edit',
+        'update' => 'admin.users.update',
+        'destroy' => 'admin.users.destroy',
     ]);
 });
