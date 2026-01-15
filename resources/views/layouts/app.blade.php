@@ -101,6 +101,10 @@
   <div class="container mt-3 d-flex justify-content-between">
       <div class="btn-group btn-group p-1 rounded-pill" style="background-color: rgba(0,0,0,0.05)" role="group">
           <button type="button"
+            class="btn fw-semibold rounded-pill border-0"
+            onclick="window.open('https://animalvaccinologynetwork.cahnr.uconn.edu/', '_blank')"
+            style="color: #40454a;">Back to USAVRCN Main Site</button>
+          <button type="button"
                   class="btn fw-semibold rounded-pill border-0 {{ !$isGroupsPage ? 'btn-light' : '' }}"
                   @if(!$isGroupsPage) style="pointer-events: none; user-select: none;" @endif
                   @if($isGroupsPage) onclick="window.location.href='{{ route('members.index') }}'" style="color: #40454a;" @endif
