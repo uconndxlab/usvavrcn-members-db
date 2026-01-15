@@ -118,6 +118,7 @@ class EntityController extends Controller
 
         $tagCategories = TagCategory::active()->ordered()->with('activeTags')->get();
         $selectedTags = $entity->tags->pluck('id')->toArray();
+        $selectedGroups = $entity->groups->pluck('id')->toArray();
         $allPeople = Entity::where('entity_type', 'person')
             ->where('name', '!=', '')
             ->orderBy('name')
@@ -125,7 +126,7 @@ class EntityController extends Controller
 
         $selectedMembers = $entity->members->pluck('id')->toArray();
         
-        return view('entities.edit', compact('entity', 'tagCategories', 'selectedTags', 'allPeople', 'selectedMembers'));
+        return view('entities.edit', compact('entity', 'tagCategories', 'selectedTags', 'selectedGroups', 'allPeople', 'selectedMembers'));
     }
 
     public function update(Request $request, Entity $entity)
@@ -155,7 +156,9 @@ class EntityController extends Controller
             'tags' => 'nullable|array',
             'tags.*' => 'exists:tags,id',
             'members' => 'nullable|array',
-            'members.*' => 'exists:entities,id'
+            'members.*' => 'exists:entities,id',
+            'groups' => 'nullable|array',
+            'groups.*' => 'exists:entities,id',
         ]);
 
         // Set name based on first/last name if provided
@@ -171,6 +174,8 @@ class EntityController extends Controller
         // Sync group members if this is a group
         if ($entity->entity_type === 'group') {
             $entity->members()->sync($request->input('members', []));
+        } else {
+            $entity->groups()->sync($request->input('groups', []));
         }
 
         if ($entity->entity_type === 'group') {

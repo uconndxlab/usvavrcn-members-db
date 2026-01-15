@@ -122,7 +122,7 @@
                     <h5 class="fw-bold text-dark mb-3 border-0">Communication Groups</h5>
                     @foreach($member->groups as $group)
                         <div class="mb-2 text-muted">
-                            Team: <a href="{{ route('groups.show', $group) }}" class="text-decoration-none text-muted">{{ $group->name }}</a>
+                            <a href="{{ route('groups.show', $group) }}" class="text-decoration-none text-muted">{{ $group->name }}</a>
                         </div>
                     @endforeach
                 </div>
@@ -132,7 +132,13 @@
                 <div class="card-body">
                     <h5 class="fw-bold text-dark mb-3 border-0">Tags</h5>
                     <div class="d-flex flex-wrap gap-2">
-                        @foreach($member->tags as $tag)
+                        @php
+                            // dont show funding or affiliation tags here (show them below)
+                            $tagsToShow = $member->tags->filter(function($tag) {
+                                return !in_array($tag->category->slug, ['funding', 'affiliation']);
+                            });
+                        @endphp
+                        @foreach($tagsToShow as $tag)
                             <span class="badge bg-primary rounded-pill">{{ $tag->name }}</span>
                         @endforeach
                     </div>
@@ -142,14 +148,31 @@
             <div class="card mb-4">
                 <div class="card-body">
                     <h5 class="fw-bold text-dark mb-3 border-0">COE Affiliation</h5>
-                    <div class="text-muted">{{ $member->affiliation }}</div>
+                    @php
+                    // display all affiliation tags
+                    $affiliationTags = $member->tags->filter(function($tag) {
+                        return $tag->category->slug === 'affiliation';
+                    });
+                    @endphp
+                    @foreach($affiliationTags as $tag)
+                        <span class="badge bg-primary rounded-pill">{{ $tag->name }}</span>
+                    @endforeach
                 </div>
             </div>
 
             <div class="card mb-4">
                 <div class="card-body">
                     <h5 class="fw-bold text-dark mb-3 border-0">Funding</h5>
-                    <div class="text-muted">{{ $member->funding_sources }}</div>
+                    @php
+                        // display all funding tags
+                        $fundingTags = $member->tags->filter(function($tag) {
+                            // why do funding tags have a space?
+                            return $tag->category->slug === 'funding';
+                        });
+                    @endphp
+                    @foreach($fundingTags as $tag)
+                        <span class="badge bg-primary rounded-pill">{{ $tag->name }}</span>
+                    @endforeach
                 </div>
             </div>
         </div>

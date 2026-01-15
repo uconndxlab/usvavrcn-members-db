@@ -63,7 +63,13 @@
                 </a>
                 <ul class="dropdown-menu">
                   <li>
-                    <a class="dropdown-item" href="{{ route('tags.index') }}">Tags</a>
+                    <a class="dropdown-item" href="{{ route('admin.users.index') }}">Manage Users</a>
+                  </li>
+                  <li>
+                    <a class="dropdown-item" href="{{ route('tags.index') }}">Manage Tags</a>
+                  </li>
+                  <li>
+                    <a class="dropdown-item" href="{{ route('admin.groups.index') }}">Manage Groups</a>
                   </li>
                 </ul>
               </li>
@@ -94,6 +100,10 @@
   @endphp
   <div class="container mt-3 d-flex justify-content-between">
       <div class="btn-group btn-group p-1 rounded-pill" style="background-color: rgba(0,0,0,0.05)" role="group">
+          <button type="button"
+            class="btn fw-semibold rounded-pill border-0"
+            onclick="window.open('https://animalvaccinologynetwork.cahnr.uconn.edu/', '_blank')"
+            style="color: #40454a;">Back to USAVRCN Main Site</button>
           <button type="button"
                   class="btn fw-semibold rounded-pill border-0 {{ !$isGroupsPage ? 'btn-light' : '' }}"
                   @if(!$isGroupsPage) style="pointer-events: none; user-select: none;" @endif
