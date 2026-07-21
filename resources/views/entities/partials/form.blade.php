@@ -266,6 +266,19 @@
                 <small class="text-muted">Check all members that belong to this group.</small>
             @endif
 
+            @can('admin')
+                <hr class="my-4">
+                <h4 class="mb-3">Visibility</h4>
+                <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" name="is_public" id="is_public" value="1"
+                        @checked(old('is_public', $entity->is_public ?? true))>
+                    <label class="form-check-label" for="is_public">
+                        Show in member database
+                    </label>
+                    <div class="form-text">Uncheck to hide this member from the public member listing.</div>
+                </div>
+            @endcan
+
             @if ($submitButton)
                 <button type="submit" class="btn btn-primary mt-4 w-100 py-3 text-uppercase">{{ $submitText }}</button>
             @endif

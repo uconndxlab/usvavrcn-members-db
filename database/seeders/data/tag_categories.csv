@@ -1,0 +1,6 @@
+id,name,slug,description,color,sort_order,is_active
+1,"Host Species Tags",host-species,"Host species being studied or targeted",#F59E0B,1,1
+2,"Pathogen Tags",pathogens,"Pathogens and disease agents of study",#EF4444,2,1
+3,"Discipline/Stage of Vaccine Development Tags",vaccine-development,"Stages and disciplines in vaccine development process",#06B6D4,3,1
+4,Affiliation,affiliation,,#3B82F6,4,1
+5,"Funding ",funding,,#10B981,5,1

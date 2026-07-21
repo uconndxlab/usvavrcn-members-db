@@ -4,7 +4,7 @@
         <div>
             <span class="h5 fw-normal text-muted me-3 text-dark">{{ $group->members()->count() }} Members</span>
             {{-- if we are not already in the group --}}
-            @if (!Auth::user()->entity->groups->contains($group))
+            @if (!Auth::user()->entity || !Auth::user()->entity->groups->contains($group))
                 <form method="POST" action="{{ route('groups.join', $group) }}" class="d-inline">
                     @csrf
                     <button type="submit" class="btn bg-primary text-white rounded-pill px-4">Join Group</button>

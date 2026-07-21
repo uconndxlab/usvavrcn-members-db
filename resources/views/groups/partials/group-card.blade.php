@@ -7,7 +7,7 @@
         default => '#57be57', // green
     };
     $user = Auth::user();
-    $inGroup = $user && $user->entity->groups->contains($group);
+    $inGroup = $user && $user->entity && $user->entity->groups->contains($group);
 @endphp
 <a href="{{ route('groups.show', $group) }}" class="text-decoration-none text-dark group-card-hover-anim">
     <div class="card h-100" style="border-left: 6px solid {{ $cardColor }};">

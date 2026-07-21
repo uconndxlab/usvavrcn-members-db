@@ -1,66 +1,105 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# USAVRCN Members Directory
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+A Laravel + Livewire member directory application for the US Animal Vaccine Research Collaborative Network (USAVRCN). It tracks member entities (people and groups), tag categories, tags, and group memberships.
 
-## About Laravel
+## Requirements
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- PHP 8.3+
+- Composer
+- SQLite (bundled with PHP on most systems)
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Getting Started
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### 1. Clone and install dependencies
 
-## Learning Laravel
+```bash
+git clone <repo-url>
+cd usvavrcn-members-db
+composer install
+```
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### 2. Configure environment
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+```bash
+cp .env.example .env
+php artisan key:generate
+```
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+The default configuration uses SQLite with no additional setup required. The database file will be created automatically at `database/database.sqlite`.
 
-## Laravel Sponsors
+### 3. Run migrations
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+```bash
+php artisan migrate
+```
 
-### Premium Partners
+### 4. Seed the database
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+Seed data is stored as CSV files in `database/seeders/data/` and covers entities (people and groups), tag categories, tags, and all pivot relationships.
 
-## Contributing
+```bash
+php artisan db:seed
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+This runs the following seeders in order:
 
-## Code of Conduct
+| Seeder | Source file | What it loads |
+|---|---|---|
+| `EntitySeeder` | `data/entities.csv` | People and group entities |
+| `TagCategorySeeder` | `data/tag_categories.csv` | Tag categories |
+| `TagSeeder` | `data/tags.csv` | Individual tags |
+| `EntityTagSeeder` | `data/entity_tag.csv` | Entity ↔ tag assignments |
+| `EntityGroupSeeder` | `data/entity_group.csv` | Group memberships |
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+To start completely fresh (drops and recreates all tables, then seeds):
 
-## Security Vulnerabilities
+```bash
+php artisan migrate:fresh --seed
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### 5. Start the development server
 
-## License
+```bash
+php artisan serve
+```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+The application will be available at <http://localhost:8000>.
+
+---
+
+## Updating the Seed Data
+
+When you have a new production database and want to regenerate the CSV seed files from it, run:
+
+```bash
+bash database/seeders/export_seed_data.sh [path/to/database.sqlite]
+```
+
+If no path is given, it defaults to `database/database.sqlite`. The script exports all relevant tables to `database/seeders/data/` — commit the updated CSVs so other developers get the new data on their next `db:seed`.
+
+---
+
+## Project Structure
+
+```
+app/
+  Http/Controllers/   – standard Laravel controllers
+  Livewire/           – Livewire components (Members, Groups, PostCard, …)
+  Models/             – Eloquent models (Entity, Tag, TagCategory, Post, User)
+database/
+  migrations/         – database schema migrations
+  seeders/
+    data/             – CSV seed files (committed to version control)
+    export_seed_data.sh – script to regenerate CSVs from a live database
+    DatabaseSeeder.php
+    EntitySeeder.php
+    TagCategorySeeder.php
+    TagSeeder.php
+    EntityTagSeeder.php
+    EntityGroupSeeder.php
+resources/views/      – Blade templates
+routes/web.php        – application routes
+```
+
+---
+
