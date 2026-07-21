@@ -4,7 +4,7 @@
     <div class="text-center mb-4">
         <h1 class="text-dark fw-normal"><strong>Groups</strong></h1>
         <div class="text-light bg-primary py-2 px-4 align-middle d-inline-block w-auto rounded-pill">
-            <p class="p-0 m-0">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+            <p class="p-0 m-0">Browse teams, focus areas, and committees. Join groups to collaborate and stay up to date with posts from your peers.</p>
         </div>
     </div>
 
@@ -55,7 +55,7 @@
     </div>
 
     {{-- List of my groups --}}
-    @if (Auth::user() && !Auth::user()->entity->groups->isEmpty())
+    @if (Auth::user() && Auth::user()->entity && !Auth::user()->entity->groups->isEmpty())
 
         <div class="row">
             @foreach (Auth::user()->entity->groups as $group)

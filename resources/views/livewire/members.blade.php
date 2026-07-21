@@ -19,46 +19,42 @@
     {{-- Search/Selectors --}}
     @if($tagCategories && $tagCategories->isNotEmpty())
         <div class="container mb-2">
-            <div class="row align-items-start fw-bold py-2 flex-column flex-md-row">
-                {{-- Tag categories - appears first on mobile, side by side on desktop --}}
-                <div class="col overflow-hidden rounded order-1 order-md-2 mb-3 mb-md-0" style="background-color: rgba(0,0,0,0.05);">
-                    <div class="d-flex align-items-start overflow-auto" style="white-space: nowrap;">
-                        @foreach($tagCategories as $category)
-                            @if($category->tags && $category->tags->isNotEmpty())
-                                <div class="d-flex flex-column justify-content-center align-items-center px-1 flex-shrink-0">
-                                    <small class="ps-2 pb-0 text-muted text-start w-100 text-uppercase text-nowrap" style="font-size: 0.7em;">{{ $category->name }}</small>
-                                    <select class="form-select fw-semibold py-2 rounded-pill" wire:model.change="selection">
-                                        <option value="all">All {{ $category->name }}</option>
-                                        @foreach($category->tags as $tag)
-                                            <option @if(isset($selectedTagIds[$tag->id])) disabled @endif value="{{ $tag->id }}">{{ $tag->name }}</option>
-                                        @endforeach
-                                    </select>
-                                    <div class="d-flex flex-column align-items-center my-2">
-                                        @foreach($category->tags as $tag)
-                                            @if (isset($selectedTagIds[$tag->id]))
-                                                <span class="badge bg-primary me-1 mb-1">
-                                                    {{ $tag->name }}
-                                                    <button type="button" class="btn-close btn-close-white btn-sm" wire:click="removeTag({{ $tag->id }})"></button>
-                                                </span>
-                                            @endif
-                                        @endforeach
-                                    </div>
+            <div class="overflow-hidden rounded fw-bold py-2" style="background-color: rgba(0,0,0,0.05);">
+                <div class="d-flex flex-wrap align-items-start gap-2 py-1">
+                    {{-- Text search --}}
+                    <div class="d-flex flex-column justify-content-center align-items-center px-1">
+                        <small class="ps-2 pb-0 text-muted text-start w-100 text-uppercase text-nowrap" style="font-size: 0.7em;">Search</small>
+                        <div class="input-group">
+                            <span class="input-group-text bg-dark border-0 rounded-start-pill text-white">
+                                <i class="bi bi-search"></i>
+                            </span>
+                            <input wire:model.live.debounce.250ms="searchTerm" type="text" class="light-placeholder text-white form-control bg-dark border-0 rounded-end-pill" placeholder="Search by name...">
+                        </div>
+                    </div>
+                    {{-- Tag category dropdowns --}}
+                    @foreach($tagCategories as $category)
+                        @if($category->tags && $category->tags->isNotEmpty())
+                            <div class="d-flex flex-column justify-content-center align-items-center px-1">
+                                <small class="ps-2 pb-0 text-muted text-start w-100 text-uppercase text-nowrap" style="font-size: 0.7em;">{{ $category->name }}</small>
+                                <select class="form-select fw-semibold py-2 rounded-pill" wire:model.change="selection">
+                                    <option value="all">All {{ $category->name }}</option>
+                                    @foreach($category->tags as $tag)
+                                        <option @if(isset($selectedTagIds[$tag->id])) disabled @endif value="{{ $tag->id }}">{{ $tag->name }}</option>
+                                    @endforeach
+                                </select>
+                                <div class="d-flex flex-column align-items-center my-2">
+                                    @foreach($category->tags as $tag)
+                                        @if (isset($selectedTagIds[$tag->id]))
+                                            <span class="badge bg-primary me-1 mb-1">
+                                                {{ $tag->name }}
+                                                <button type="button" class="btn-close btn-close-white btn-sm" wire:click="removeTag({{ $tag->id }})"></button>
+                                            </span>
+                                        @endif
+                                    @endforeach
                                 </div>
-                            @endif
-                        @endforeach
-                    </div>
-                </div>
-                <div class="col-12 col-md-auto d-flex flex-column align-items-center justify-content-center px-1 order-2 order-md-1">
-                    <small class="ps-2 pb-0 text-muted text-start w-100 text-uppercase text-nowrap d-none d-md-block" style="font-size: 0.7em;">
-                        {{-- blank header text so that the input below will align with the other items on desktop --}}
-                        &nbsp;
-                    </small>
-                    <div class="input-group" style="width: 200px;">
-                        <span class="input-group-text bg-dark border-0 rounded-start-pill text-white">
-                            <i class="bi bi-search"></i>
-                        </span>
-                        <input wire:model.live.debounce.250ms="searchTerm" type="text" class="light-placeholder text-white form-control bg-dark border-0 rounded-end-pill" placeholder="Search by name...">
-                    </div>
+                            </div>
+                        @endif
+                    @endforeach
                 </div>
             </div>
         </div>

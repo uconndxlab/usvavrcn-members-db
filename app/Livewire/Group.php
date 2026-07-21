@@ -27,13 +27,15 @@ class Group extends Component
             $user->posts()->syncWithoutDetaching($this->group->groupPosts->pluck('id'));
 
             $count = 0;
-            $user->entity->groups->each(function ($group) use ($user, &$count) {
-                $group->groupPosts->each(function ($post) use ($user, &$count) {
-                    if (!$user->posts->contains($post->id)) {
-                        $count++;
-                    }
+            if ($user->entity) {
+                $user->entity->groups->each(function ($group) use ($user, &$count) {
+                    $group->groupPosts->each(function ($post) use ($user, &$count) {
+                        if (!$user->posts->contains($post->id)) {
+                            $count++;
+                        }
+                    });
                 });
-            });
+            }
 
             // tell browser component to dispatch another browser event up the dom
             // to tell the navbar to update the unread posts count

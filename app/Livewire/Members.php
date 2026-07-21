@@ -23,7 +23,7 @@ class Members extends Component
 
     private function getQuery()
     {
-        $query = Entity::where('entity_type', 'person');
+        $query = Entity::where('entity_type', 'person')->where('is_public', true);
         
         // update query
         if ($this->selection != 'all') {

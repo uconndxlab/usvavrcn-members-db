@@ -2,15 +2,15 @@
 
 namespace Database\Seeders;
 
-use App\Models\TagCategory;
+use App\Models\Tag;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\File;
 
-class TagCategorySeeder extends Seeder
+class TagSeeder extends Seeder
 {
     public function run(): void
     {
-        $path = database_path('seeders/data/tag_categories.csv');
+        $path = database_path('seeders/data/tags.csv');
 
         if (!File::exists($path)) {
             $this->command->error("CSV not found at: $path");
@@ -26,15 +26,18 @@ class TagCategorySeeder extends Seeder
             $data = array_map(fn($v) => (is_string($v) && trim($v) === '') ? null : (is_string($v) ? trim($v) : $v), $data);
 
             try {
-                TagCategory::updateOrCreate(
+                Tag::updateOrCreate(
                     ['id' => $data['id']],
                     [
-                        'name'        => $data['name'],
-                        'slug'        => $data['slug'],
-                        'description' => $data['description'],
-                        'color'       => $data['color'],
-                        'sort_order'  => (int) ($data['sort_order'] ?? 0),
-                        'is_active'   => (bool) ($data['is_active'] ?? true),
+                        'name'            => $data['name'],
+                        'slug'            => $data['slug'],
+                        'description'     => $data['description'],
+                        'tag_category_id' => $data['tag_category_id'],
+                        'parent_tag_id'   => $data['parent_tag_id'],
+                        'color'           => $data['color'],
+                        'sort_order'      => (int) ($data['sort_order'] ?? 0),
+                        'is_active'       => (bool) ($data['is_active'] ?? true),
+                        'metadata'        => $data['metadata'],
                     ]
                 );
             } catch (\Exception $e) {
@@ -42,6 +45,6 @@ class TagCategorySeeder extends Seeder
             }
         }
 
-        $this->command->info("Tag categories seeded successfully.");
+        $this->command->info("Tags seeded successfully.");
     }
 }

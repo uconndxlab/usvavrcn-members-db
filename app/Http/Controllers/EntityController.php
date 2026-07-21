@@ -159,12 +159,16 @@ class EntityController extends Controller
             'members.*' => 'exists:entities,id',
             'groups' => 'nullable|array',
             'groups.*' => 'exists:entities,id',
+            'is_public' => 'nullable|boolean',
         ]);
 
         // Set name based on first/last name if provided
         if (empty($validated['name']) && !empty($validated['first_name']) && !empty($validated['last_name'])) {
             $validated['name'] = $validated['first_name'] . ' ' . $validated['last_name'];
         }
+
+        // Unchecked checkboxes are absent from POST, so explicitly derive the boolean
+        $validated['is_public'] = $request->boolean('is_public');
 
         $entity->update($validated);
 
