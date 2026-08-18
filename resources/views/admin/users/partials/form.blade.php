@@ -38,14 +38,3 @@
         <div class="text-danger">{{ $message }}</div>
     @enderror
 </div>
-
-@if($user->entity ?? false)
-<div class="mb-3">
-    <label class="form-label">Associated Entity</label>
-    <div>
-        <a href="{{ route('members.show', $user->entity) }}" class="btn btn-sm btn-outline-primary">
-            View {{ $user->entity->name }}
-        </a>
-    </div>
-</div>
-@endif
