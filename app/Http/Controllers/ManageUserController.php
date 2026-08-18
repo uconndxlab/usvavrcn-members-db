@@ -44,6 +44,20 @@ class ManageUserController extends Controller
         return redirect()->route('admin.users.index')->with('success', 'User updated!');
     }
 
+    public function toggleEntityVisibility(User $user)
+    {
+        if (!$user->entity) {
+            return redirect()->back()->with('error', 'This user has no associated entity.');
+        }
+
+        $user->entity->is_public = !$user->entity->is_public;
+        $user->entity->save();
+
+        return redirect()->back()->with('success', $user->entity->is_public
+            ? 'Profile is now public.'
+            : 'Profile is now hidden.');
+    }
+
     public function destroy(User $user)
     {
         // Prevent deleting yourself

@@ -5,7 +5,7 @@
     <h1>Create Profile</h1>
     <form action="{{ route('entities.store') }}" method="POST">
         @csrf
-        @include('entities.partials.form', ['submitButton' => false])
+        @include('entities.partials.form', ['submitButton' => false, 'entity' => new \App\Models\Entity()])
 
         <div class="d-flex gap-2 mt-4">
             <button type="submit" class="btn btn-primary">Create Profile</button>

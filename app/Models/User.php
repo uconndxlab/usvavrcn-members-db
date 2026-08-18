@@ -6,6 +6,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 class User extends Authenticatable
 {
@@ -52,6 +54,26 @@ class User extends Authenticatable
     public function entity()
     {
         return $this->belongsTo(Entity::class);
+    }
+
+    /**
+     * Find or create the login account for a person entity, matched by email.
+     * Returns null for entities with no email or that aren't a person (e.g. groups).
+     */
+    public static function createForEntity(Entity $entity): ?self
+    {
+        if ($entity->entity_type !== 'person' || empty($entity->email)) {
+            return null;
+        }
+
+        return static::firstOrCreate(
+            ['email' => $entity->email],
+            [
+                'name' => $entity->name,
+                'entity_id' => $entity->id,
+                'password' => Hash::make(Str::random(16)),
+            ]
+        );
     }
 
     /**
