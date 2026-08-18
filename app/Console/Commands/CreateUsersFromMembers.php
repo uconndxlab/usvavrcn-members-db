@@ -5,8 +5,6 @@ namespace App\Console\Commands;
 use App\Models\Entity;
 use App\Models\User;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
 
 class CreateUsersFromMembers extends Command
 {
@@ -31,7 +29,8 @@ class CreateUsersFromMembers extends Command
     {
         $members = Entity::where('entity_type', 'person')
             ->whereNotNull('email')
-            ->get(['id', 'email', 'name']);
+            ->where('email', '!=', '')
+            ->get(['id', 'email', 'name', 'entity_type']);
 
         $accountsCreated = 0;
 
@@ -39,15 +38,9 @@ class CreateUsersFromMembers extends Command
 
             $userExists = User::where('email', $member->email)->exists();
 
-            $user = User::firstOrCreate([
-                'email' => $member->email,
-            ], [
-                'name' => $member->name,
-                'entity_id' => $member->id,
-                'password' => Hash::make(Str::random(16)), // This line is very slow (Hash::make)
-            ]);
+            $user = User::createForEntity($member);
 
-            if (!$userExists) {
+            if (!$userExists && $user) {
                 $this->info("Created user: {$user->email}");
                 $accountsCreated++;
             }

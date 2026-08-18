@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Entity;
 use App\Models\TagCategory;
+use App\Models\User;
 use Illuminate\Support\Facades\Gate;
 
 class EntityController extends Controller
@@ -85,7 +86,10 @@ class EntityController extends Controller
         }
 
         $entity = Entity::create($validated);
-        
+
+        // Give person profiles a login account so they don't get stranded without one
+        User::createForEntity($entity);
+
         // Sync tags
         if ($request->has('tags')) {
             $entity->tags()->sync($request->input('tags', []));
