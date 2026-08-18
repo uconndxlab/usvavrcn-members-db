@@ -31,18 +31,22 @@
                         <td>{{ $user->email }}</td>
                         <td>
                             @if($user->entity)
-                                <a href="{{ route('members.show', $user->entity) }}">{{ $user->entity->name }}</a>
-                                @if($user->entity->is_public)
-                                    <span class="badge bg-success">Public</span>
-                                @else
-                                    <span class="badge bg-secondary">Hidden</span>
-                                @endif
-                                <form action="{{ route('admin.users.toggleEntityVisibility', $user) }}" method="POST" class="d-inline">
-                                    @csrf
-                                    <button type="submit" class="btn btn-sm btn-outline-secondary">
-                                        {{ $user->entity->is_public ? 'Hide' : 'Make public' }}
-                                    </button>
-                                </form>
+                                <div class="d-flex align-items-center justify-content-between">
+                                    <a href="{{ route('members.show', $user->entity) }}">{{ $user->entity->name }}</a>
+                                    <div class="d-flex align-items-center gap-2">
+                                        @if($user->entity->is_public)
+                                            <span class="badge bg-success">Public</span>
+                                        @else
+                                            <span class="badge bg-secondary">Hidden</span>
+                                        @endif
+                                        <form action="{{ route('admin.users.toggleEntityVisibility', $user) }}" method="POST" class="d-inline">
+                                            @csrf
+                                            <button type="submit" class="btn btn-sm btn-outline-secondary">
+                                                {{ $user->entity->is_public ? 'Hide' : 'Make public' }}
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
                             @else
                                 <span class="text-muted">No entity</span>
                             @endif
