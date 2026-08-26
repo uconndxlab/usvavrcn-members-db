@@ -2,6 +2,9 @@
 
 @section('content')
 <div class="container">
+    <a href="{{ route('admin.users.index') }}" class="btn btn-sm btn-outline-secondary mb-3">
+        &laquo; Back to Users
+    </a>
     <h1>Edit User</h1>
 
     @if($user->entity)

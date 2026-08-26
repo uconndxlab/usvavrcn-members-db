@@ -7,6 +7,10 @@
 @endphp
 
 <div class="container">
+    <a href="{{ route('members.index') }}" class="btn btn-outline-secondary btn-sm mb-3">
+        <i class="bi bi-arrow-left"></i> Back to Members
+    </a>
+
     {{-- Members Breadcrumbs --}}
     <nav aria-label="breadcrumb" class="mb-2">
         <ol class="breadcrumb">

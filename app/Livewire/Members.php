@@ -74,6 +74,9 @@ class Members extends Component
     public function render()
     {
         $members = $this->getQuery()->sortBy(function($member) {
+            if (!empty($member->last_name)) {
+                return $member->last_name;
+            }
             return !empty($member->name) ? $member->name : $member->email;
         });
 
