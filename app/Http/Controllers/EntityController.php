@@ -171,8 +171,12 @@ class EntityController extends Controller
             $validated['name'] = $validated['first_name'] . ' ' . $validated['last_name'];
         }
 
-        // Unchecked checkboxes are absent from POST, so explicitly derive the boolean
-        $validated['is_public'] = $request->boolean('is_public');
+        // The is_public checkbox only renders for admins
+        if (Gate::allows('admin')) {
+            $validated['is_public'] = $request->boolean('is_public');
+        } else {
+            unset($validated['is_public']);
+        }
 
         $entity->update($validated);
 
