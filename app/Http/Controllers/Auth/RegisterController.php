@@ -33,6 +33,7 @@ class RegisterController extends Controller
             'entity_type' => 'person',
             'name' => $user->name,
             'email' => $user->email,
+            'is_public' => true,
         ]);
 
         // link user to this entity

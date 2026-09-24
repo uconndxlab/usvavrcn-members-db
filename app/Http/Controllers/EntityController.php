@@ -85,6 +85,8 @@ class EntityController extends Controller
             $validated['name'] = $validated['first_name'] . ' ' . $validated['last_name'];
         }
 
+        $validated['is_public'] = true;
+
         $entity = Entity::create($validated);
 
         // Give person profiles a login account so they don't get stranded without one

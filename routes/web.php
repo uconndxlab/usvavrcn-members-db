@@ -87,4 +87,5 @@ Route::middleware(['auth', 'can:admin'])->group(function() {
         'destroy' => 'admin.users.destroy',
     ]);
     Route::post('admin/users/{user}/toggle-entity-visibility', [ManageUserController::class, 'toggleEntityVisibility'])->name('admin.users.toggleEntityVisibility');
+    Route::get('admin/users-export', [ManageUserController::class, 'export'])->name('admin.users.export');
 });

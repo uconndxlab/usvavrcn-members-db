@@ -9,10 +9,39 @@ use Illuminate\Validation\Rules\Password;
 
 class ManageUserController extends Controller
 {
-    public function index()
+    private const SORTABLE_COLUMNS = ['name', 'email', 'created_at', 'last_login'];
+
+    public function index(Request $request)
+    {
+        $sort = in_array($request->query('sort'), self::SORTABLE_COLUMNS, true)
+            ? $request->query('sort')
+            : 'name';
+        $direction = $request->query('direction') === 'desc' ? 'desc' : 'asc';
+
+        $users = User::with('entity')->orderBy($sort, $direction)->get();
+
+        return view('admin.users.index', compact('users', 'sort', 'direction'));
+    }
+
+    public function export()
     {
         $users = User::with('entity')->orderBy('name')->get();
-        return view('admin.users.index', compact('users'));
+
+        return response()->streamDownload(function () use ($users) {
+            $out = fopen('php://output', 'w');
+            fputcsv($out, ['Name', 'Email', 'Entity', 'Admin', 'Last Login', 'Joined']);
+            foreach ($users as $user) {
+                fputcsv($out, [
+                    $user->name,
+                    $user->email,
+                    $user->entity->name ?? '',
+                    $user->is_admin ? 'Yes' : 'No',
+                    $user->last_login?->format('Y-m-d') ?? '',
+                    $user->created_at->format('Y-m-d'),
+                ]);
+            }
+            fclose($out);
+        }, 'usavrcn_users_' . date('Y-m-d') . '.csv');
     }
 
     public function edit(User $user)
